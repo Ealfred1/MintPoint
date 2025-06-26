@@ -1,0 +1,328 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animation Classes */
+.animate-in {
+  animation: slideInUp 0.8s ease-out forwards;
+}
+
+.animate-in-left {
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.animate-in-right {
+  animation: slideInRight 0.8s ease-out forwards;
+}
+
+.animate-in-scale {
+  animation: fadeInScale 0.8s ease-out forwards;
+}
+
+/* Bento Card Animations */
+.bento-card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a5568;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #68d391;
+}
+
+/* Performance Optimizations */
+.animate-on-scroll {
+  will-change: transform, opacity;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  .bento-card {
+    min-height: 200px;
+  }
+}
+
+/* Hover Effects */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading States */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Parallax Section Styles */
+.parallax-slide {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+}
+
+/* Prevent body scroll when parallax is active */
+body.parallax-active {
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Smooth scrolling performance */
+.parallax-container {
+  transform: translateZ(0);
+  perspective: 1000px;
+}
+
+/* Enhanced progress indicator */
+.progress-indicator {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 12px 8px;
+}
+
+/* Slide transition effects */
+.slide-enter {
+  transform: scale(0.5) translateY(150px);
+  opacity: 0;
+}
+
+.slide-active {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.slide-exit {
+  transform: scale(0.5) translateY(-100px);
+  opacity: 0;
+}
+
+/* Smooth hardware acceleration */
+.parallax-slide,
+.parallax-content {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Marquee animations */
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: inline-block;
+  animation: marquee 30s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Fixed title positioning */
+.fixed-title {
+  position: fixed;
+  top: 120px;
+  left: 50px;
+  z-index: 40;
+  transition: all 0.3s ease;
+}
+
+/* User card animations */
+.user-card {
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .parallax-slide h2 {
+    font-size: 2.5rem;
+  }
+
+  .parallax-slide p {
+    font-size: 1.1rem;
+  }
+
+  .progress-indicator {
+    right: 1rem;
+  }
+
+  .fixed-title {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+  }
+
+  .mintpoint-for-content {
+    width: 100% !important;
+    right: auto !important;
+  }
+}
+
+/* Prevent text selection during parallax */
+.parallax-active * {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Enhanced scroll progress bar */
+.scroll-progress-container {
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 8px 16px;
+}
+
+/* Enhanced mobile responsiveness for Bento grid */
+@media (max-width: 1024px) {
+  .bento-card {
+    min-height: 180px;
+  }
+
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    height: auto;
+  }
+
+  .col-span-2 {
+    grid-column: span 2;
+  }
+
+  .row-span-2 {
+    grid-row: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-cols-3 {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, 1fr);
+  }
+
+  .col-span-1,
+  .col-span-2 {
+    grid-column: span 1;
+  }
+
+  .row-span-1,
+  .row-span-2 {
+    grid-row: span 1;
+  }
+}
+
+/* Progress indicator animations */
+.progress-dot {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-dot.active {
+  transform: scale(1.2);
+}
+
+/* Loading spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
