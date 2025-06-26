@@ -6,44 +6,62 @@ const bentoItems = [
   {
     title: "ACCEPT ALL PAYMENTS",
     description: "Card, USSD, transfers, and virtual accounts",
-    bgColor: "from-gray-900 to-black",
-    illustration: "💳", // Credit card with checkmark
+    bgColor: "#000",
+    image: "/images/accept-pay.png",
+    backgroundImage: "/images/bento/card-bg.png",
     size: "normal",
+    imageStyle: { bottom: "-10px", left: "50%", transform: "translateX(-50%) scale(1.5)" },
+    imageClass: "",
   },
   {
     title: "GET DISCOVERED",
     description: "Nearby users find you easily with AgentRadar",
-    bgColor: "from-gray-800 to-gray-900",
-    illustration: "🎯", // Radar device
+    bgColor: "#000",
+    image: "/images/get-discovered.png",
+    backgroundImage: "/images/bento/radar-bg.png",
     size: "normal",
+    imageStyle: { top: "100px", right: "12px", width: "225px", height: "225px", transform: "scale(1.2)" },
+    imageClass: "",
   },
   {
     title: "GO HARDWARE-FREE",
     description: "Use just your phone to run your POS business",
-    bgColor: "from-gray-900 to-black",
-    illustration: "📱", // Phone with POS terminal
+    bgColor: "#000",
+    image: "/images/go-hardware.png",
+    backgroundImage: "/images/bento/phone-bg.png",
     size: "tall",
+    imageStyle: { bottom: "-100px", left: "-43px", transform: "scale(2)", width: "319px", height: "319px" },
+    imageClass: "",
   },
   {
     title: "STAY SECURE",
     description: "SafePay AI fights fraud while you focus on sales",
-    bgColor: "from-gray-900 to-black",
-    illustration: "🔒", // Blue safe/locker
+    bgColor: "#000",
+    image: "/images/stay-secure.png",
+    backgroundImage: "/images/bento/lock-bg.png",
     size: "tall",
+    imageStyle: { bottom: "0px", left: "50%", transform: "translateX(-50%) scale(1.5)", width: "319px", height: "319px" },
+    imageClass: "",
   },
   {
     title: "WORK SMARTER",
     description: "POS Insight helps you track, learn, and grow",
-    bgColor: "from-gray-800 to-gray-900",
-    illustration: "📊", // Colorful bar charts
+    bgColor: "#000",
+    image: "/images/work-smarter.png",
+    backgroundImage: "/images/bento/chart-bg.png",
     size: "normal",
+    imageStyle: { bottom: "-50px", left: "50%", transform: "translateX(-50%) scale(1.2)" },
+     imageClass: "",
   },
   {
     title: "GET 24/7 HELP",
     description: "SupportBot is always online, so you never lose steam",
-    bgColor: "from-gray-900 to-black",
-    illustration: "❓", // Globe with FAQ bubble
+    bgColor: "#000",
+    image: "/images/faq.png",
+    backgroundImage: "/images/faq.png",
     size: "wide",
+    imageStyle: { bottom: "-40px", right: "20px", width: "319px", height: "319px" },
+    imageClass: "",
   },
 ]
 
@@ -76,6 +94,47 @@ export default function BentoSection() {
     return () => observer.disconnect()
   }, [])
 
+  // Helper to render a bento card
+  const renderBentoCard = (
+    item: typeof bentoItems[number],
+    idx: number,
+    extraClasses = ""
+  ) => (
+    <div
+      key={item.title}
+      className={`bento-card relative overflow-hidden rounded-3xl p-8 text-white transform transition-all duration-700 opacity-0 translate-y-8 hover:scale-105 hover:shadow-2xl ${extraClasses}`}
+      style={{
+        background: `linear-gradient(to bottom right, rgba(0,0,0,1), rgba(0,0,0,1)), url('${item.backgroundImage}')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* Background overlay for gradient */}
+      <div className="absolute inset-0 z-0" style={{ background: "rgba(0,0,0,0.25)" }}></div>
+      {/* Card content */}
+      <div className="relative z-10 h-full flex flex-col pb-20">
+        <h3 className={`${item.size === "tall" || item.size === "wide" ? "text-xl mb-4" : "text-lg mb-3"} font-bold leading-tight`}>
+          {item.title}
+        </h3>
+        <p className={`${item.size === "tall" || item.size === "wide" ? "text-base" : "text-sm"} text-white/80 leading-relaxed`}>
+          {item.description}
+        </p>
+      </div>
+      {/* Icon image, positioned absolutely at the bottom using item.imageClass and item.imageStyle */}
+      <div
+        className={`z-20 absolute ${item.imageClass || ""}`}
+        style={item.imageStyle}
+      >
+        <img
+          src={item.image}
+          alt={item.title + " icon"}
+          className="object-contain drop-shadow-lg"
+          draggable="false"
+        />
+      </div>
+    </div>
+  )
+
   return (
     <section ref={sectionRef} className="py-20 bg-white text-black">
       <div className="container mx-auto px-6">
@@ -90,61 +149,16 @@ export default function BentoSection() {
         {/* Bento Grid */}
         <div className="grid grid-cols-3 grid-rows-3 gap-6 max-w-6xl mx-auto h-[800px]">
           {/* Row 1 */}
-          <div
-            className={`bento-card col-span-1 row-span-1 relative overflow-hidden rounded-3xl p-8 bg-gradient-to-br ${bentoItems[0].bgColor} text-white transform transition-all duration-700 opacity-0 translate-y-8 hover:scale-105 hover:shadow-2xl`}
-          >
-            <div className="relative z-10 h-full flex flex-col">
-              <h3 className="text-lg font-bold mb-3 leading-tight">{bentoItems[0].title}</h3>
-              <p className="text-white/80 text-sm leading-relaxed">{bentoItems[0].description}</p>
-            </div>
-          </div>
-
-          <div
-            className={`bento-card col-span-1 row-span-1 relative overflow-hidden rounded-3xl p-8 bg-gradient-to-br ${bentoItems[1].bgColor} text-white transform transition-all duration-700 opacity-0 translate-y-8 hover:scale-105 hover:shadow-2xl`}
-          >
-            <div className="relative z-10 h-full flex flex-col">
-              <h3 className="text-lg font-bold mb-3 leading-tight">{bentoItems[1].title}</h3>
-              <p className="text-white/80 text-sm leading-relaxed">{bentoItems[1].description}</p>
-            </div>
-          </div>
-
-          <div
-            className={`bento-card col-span-1 row-span-2 relative overflow-hidden rounded-3xl p-8 bg-gradient-to-br ${bentoItems[2].bgColor} text-white transform transition-all duration-700 opacity-0 translate-y-8 hover:scale-105 hover:shadow-2xl`}
-          >
-            <div className="relative z-10 h-full flex flex-col">
-              <h3 className="text-xl font-bold mb-4 leading-tight">{bentoItems[2].title}</h3>
-              <p className="text-white/80 text-base leading-relaxed">{bentoItems[2].description}</p>
-            </div>
-          </div>
+          {renderBentoCard(bentoItems[0], 0, "col-span-1 row-span-1")}
+          {renderBentoCard(bentoItems[1], 1, "col-span-1 row-span-1")}
+          {renderBentoCard(bentoItems[2], 2, "col-span-1 row-span-2")}
 
           {/* Row 2 */}
-          <div
-            className={`bento-card col-span-1 row-span-2 relative overflow-hidden rounded-3xl p-8 bg-gradient-to-br ${bentoItems[3].bgColor} text-white transform transition-all duration-700 opacity-0 translate-y-8 hover:scale-105 hover:shadow-2xl`}
-          >
-            <div className="relative z-10 h-full flex flex-col">
-              <h3 className="text-xl font-bold mb-4 leading-tight">{bentoItems[3].title}</h3>
-              <p className="text-white/80 text-base leading-relaxed">{bentoItems[3].description}</p>
-            </div>
-          </div>
-
-          <div
-            className={`bento-card col-span-1 row-span-1 relative overflow-hidden rounded-3xl p-8 bg-gradient-to-br ${bentoItems[4].bgColor} text-white transform transition-all duration-700 opacity-0 translate-y-8 hover:scale-105 hover:shadow-2xl`}
-          >
-            <div className="relative z-10 h-full flex flex-col">
-              <h3 className="text-lg font-bold mb-3 leading-tight">{bentoItems[4].title}</h3>
-              <p className="text-white/80 text-sm leading-relaxed">{bentoItems[4].description}</p>
-            </div>
-          </div>
+          {renderBentoCard(bentoItems[3], 3, "col-span-1 row-span-2")}
+          {renderBentoCard(bentoItems[4], 4, "col-span-1 row-span-1")}
 
           {/* Row 3 */}
-          <div
-            className={`bento-card col-span-2 row-span-1 relative overflow-hidden rounded-3xl p-8 bg-gradient-to-br ${bentoItems[5].bgColor} text-white transform transition-all duration-700 opacity-0 translate-y-8 hover:scale-105 hover:shadow-2xl`}
-          >
-            <div className="relative z-10 h-full flex flex-col">
-              <h3 className="text-xl font-bold mb-4 leading-tight">{bentoItems[5].title}</h3>
-              <p className="text-white/80 text-base leading-relaxed">{bentoItems[5].description}</p>
-            </div>
-          </div>
+          {renderBentoCard(bentoItems[5], 5, "col-span-2 row-span-1")}
         </div>
       </div>
     </section>

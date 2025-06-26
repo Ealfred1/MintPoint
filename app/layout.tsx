@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     siteName: 'Mintpoint',
     images: [
       {
-        url: '/images/mintpoint-og.png',
+        url: '/images/mintpoint.svg',
         width: 1200,
         height: 630,
         alt: 'Mintpoint - AI-powered POS',
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     title: 'Mintpoint - AI-powered POS',
     description:
       'Welcome to Mintpoint, the AI-powered POS. Register today and start using your phone to receive fast card payments with a tap, USSD, and virtual accounts, all in one platform.',
-    images: ['/images/mintpoint-og.png'],
+    images: ['/images/mintpoint.svg'],
     site: '@mintpointapp',
     creator: '@mintpointapp',
   },
@@ -70,7 +70,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/mintpoint.svg" />
         {/* Canonical URL */}
         <link rel="canonical" href="https://mintpoint.com" />
         {/* Additional SEO meta tags */}
