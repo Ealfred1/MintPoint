@@ -25,33 +25,17 @@ export default function VideoSection() {
   return (
     <section ref={sectionRef} className="py-20 bg-black animate-on-scroll">
       <div className="container mx-auto px-6 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold mb-6">EXPERIENCE A NEW WAY FORWARD</h2>
+        <h2 className="text-4xl md:text-[37px] font-bold mb-6">EXPERIENCE A NEW WAY FORWARD</h2>
 
-        <p className="text-lg md:text-xl text-white/80 mb-12 max-w-3xl mx-auto">
+        <p className="text-lg font-medium text-white/80 mb-12 max-w-3xl mx-auto">
           High fees, hidden charges, and delayed payments shouldn't stand between you and your earnings.
         </p>
 
         {/* App Store Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-          <div className="bg-white text-black px-6 py-3 rounded-lg flex items-center space-x-3 hover:bg-gray-100 transition-colors cursor-pointer">
-            <div className="w-8 h-8 bg-black rounded-md flex items-center justify-center">
-              <span className="text-white text-xs font-bold">📱</span>
-            </div>
-            <div className="text-left">
-              <div className="text-xs">Download on the</div>
-              <div className="font-bold">App Store</div>
-            </div>
-          </div>
+          <img src="/images/appstore-btn.svg" alt="Download on the App Store" className="transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer" draggable="false" />
 
-          <div className="bg-white text-black px-6 py-3 rounded-lg flex items-center space-x-3 hover:bg-gray-100 transition-colors cursor-pointer">
-            <div className="w-8 h-8 bg-black rounded-md flex items-center justify-center">
-              <span className="text-white text-xs font-bold">▶</span>
-            </div>
-            <div className="text-left">
-              <div className="text-xs">GET IT ON</div>
-              <div className="font-bold">Google Play</div>
-            </div>
-          </div>
+          <img src="/images/playstore-btn.svg" alt="Download on Play Store" className="transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer" draggable="false" />
         </div>
 
         {/* Video Placeholder */}
