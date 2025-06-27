@@ -3,14 +3,9 @@
 import { useEffect, useRef } from "react"
 
 const logos = [
-  { name: "OPay", color: "text-green-500", bg: "bg-green-500/10" },
-  { name: "Moniepoint", color: "text-blue-500", bg: "bg-blue-500/10" },
-  { name: "Paystack", color: "text-cyan-500", bg: "bg-cyan-500/10" },
-  { name: "Flutterwave", color: "text-orange-500", bg: "bg-orange-500/10" },
-  { name: "Kuda", color: "text-purple-500", bg: "bg-purple-500/10" },
-  { name: "PalmPay", color: "text-pink-500", bg: "bg-pink-500/10" },
-  { name: "Interswitch", color: "text-red-500", bg: "bg-red-500/10" },
-  { name: "Zenith Bank", color: "text-yellow-500", bg: "bg-yellow-500/10" },
+  { name: "OPay", image: "/images/opay.png" },
+  { name: "Moniepoint", image: "/images/moniepoint.png" },
+  { name: "Paystack", image: "/images/paystack_logo.svg.svg" },
 ]
 
 export default function TrustedBySection() {
@@ -59,7 +54,7 @@ export default function TrustedBySection() {
           <br />
           POS COMPANIES
         </h2>
-        <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+        <p className="text-lg md:text-[18px] text-[#6F6F6F] max-w-3xl mx-auto">
           Mintpoint powers agents across more than 15 top-tier POS platforms.
           <br />
           From small-town operators to high-volume hubs, they all trust Mintpoint.
@@ -74,12 +69,13 @@ export default function TrustedBySection() {
         <div ref={marqueeRef} className="flex items-center space-x-12 py-8" style={{ width: "fit-content" }}>
           <div className="flex items-center space-x-12">
             {logos.map((logo, index) => (
-              <div
+              <img
                 key={index}
-                className={`flex items-center justify-center px-8 py-4 rounded-2xl ${logo.bg} border border-gray-200 hover:scale-105 transition-transform duration-300 min-w-[200px]`}
-              >
-                <span className={`text-2xl font-bold ${logo.color}`}>{logo.name}</span>
-              </div>
+                src={logo.image}
+                alt={logo.name}
+                className="h-12 w-auto object-contain"
+                draggable="false"
+              />
             ))}
           </div>
         </div>

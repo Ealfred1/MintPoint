@@ -3,6 +3,16 @@
 import { useEffect, useRef } from "react"
 import Image from "next/image"
 
+const avatarImages = [
+  "/images/avatar1.png",
+  "/images/av1.svg",
+  "/images/av2.svg",
+  "/images/av3.svg",
+  "/images/av4.svg",
+  "/images/av5.svg",
+  "/images/av6.svg",
+]
+
 export default function JoinMovementSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const imageRef = useRef<HTMLDivElement>(null)
@@ -29,83 +39,79 @@ export default function JoinMovementSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative py-20 bg-green-500 overflow-hidden">
-      <div className="container mx-auto px-6">
+    <section 
+      ref={sectionRef} 
+      className="relative py-20 bg-[#008B3A] h-[459px] overflow-hidden"
+    >
+      {/* Background rough image with 10% opacity */}
+      <div className="absolute inset-0 opacity-10 z-0">
+        <Image
+          src="/images/rough.png"
+          alt="Background texture"
+          fill
+          className="object-cover"
+        />
+      </div>
+      
+      <div className="container mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Left Content */}
           <div className="text-white pt-8">
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">JOIN THE MOVEMENT</h2>
+            <h2 className="text-[37px] font-bold mb-1 leading-tight">JOIN THE MOVEMENT</h2>
 
-            <p className="text-xl md:text-2xl mb-8 leading-relaxed">
-              Thousands are switching to smarter transactions with Mintpoint. Why not you?
+            <p className="text-lg mb-8 leading-relaxed">
+              Thousands are switching to smarter transactions with<br /> Mintpoint. Why not you?
             </p>
 
             {/* User Avatars */}
             <div className="flex items-center mb-8">
-              <div className="flex -space-x-3">
-                {[1, 2, 3, 4, 5].map((i) => (
+              <div className="flex -space-x-5">
+                {avatarImages.map((src, i) => (
                   <div
                     key={i}
-                    className="w-12 h-12 rounded-full bg-white/20 border-2 border-white flex items-center justify-center"
+                    className="w-12 h-12 rounded-full flex items-center justify-center overflow-hidden"
                   >
-                    <span className="text-white font-bold">👤</span>
+                    <Image
+                      src={src}
+                      alt={`User avatar ${i + 1}`}
+                      width={48}
+                      height={48}
+                      className="object-cover w-full h-full"
+                    />
                   </div>
                 ))}
-                <div className="w-12 h-12 rounded-full bg-white text-green-500 border-2 border-white flex items-center justify-center ml-2">
-                  <span className="text-sm font-bold">+10K</span>
-                </div>
               </div>
             </div>
 
             {/* App Store Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <div className="bg-black text-white px-6 py-3 rounded-lg flex items-center space-x-3 hover:bg-gray-800 transition-colors cursor-pointer">
-                <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center">
-                  <span className="text-black text-xs font-bold">📱</span>
-                </div>
-                <div className="text-left">
-                  <div className="text-xs">Download on the</div>
-                  <div className="font-bold">App Store</div>
-                </div>
-              </div>
+              <img src="/images/appstore-btn.svg" alt="Download on the App Store" className="transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer" draggable="false" />
 
-              <div className="bg-black text-white px-6 py-3 rounded-lg flex items-center space-x-3 hover:bg-gray-800 transition-colors cursor-pointer">
-                <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center">
-                  <span className="text-black text-xs font-bold">▶</span>
-                </div>
-                <div className="text-left">
-                  <div className="text-xs">GET IT ON</div>
-                  <div className="font-bold">Google Play</div>
-                </div>
-              </div>
+                <img src="/images/playstore-btn.svg" alt="Download on Play Store" className="transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer" draggable="false" />
             </div>
           </div>
 
-          {/* Right Image - Positioned at top */}
-          <div className="relative flex justify-end">
+          {/* Right Image - Enhanced positioning and sizing */}
+          <div className="relative flex justify-end items-center min-h-[600px] lg:min-h-[800px]">
             <div
               ref={imageRef}
-              className="relative transform transition-transform duration-1000"
-              style={{ alignSelf: "flex-start" }}
+              className="relative transform transition-transform duration-1000 flex items-center justify-center"
+              style={{ 
+                // transform: "rotate(119deg)"
+              }}
             >
-              <div className="relative">
+              <div className="relative -translate-y-[230px] w-[400px] h-[400px] lg:w-[600px] lg:h-[600px] xl:w-[800px] xl:h-[800px]">
                 <Image
-                  src="/join-movement.png"
+                  src="/images/join-d-movement.png"
                   alt="Join the Movement"
-                  width={600}
-                  height={400}
-                  className="w-full h-auto max-w-lg"
+                  fill
+                  className="object-contain absolute top-0 -rotate-[120deg]"
+                  sizes="(max-width: 768px) 400px, (max-width: 1024px) 600px, 800px"
                 />
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 right-10 w-32 h-32 border-4 border-white rounded-full"></div>
-        <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-white rounded-full"></div>
       </div>
     </section>
   )

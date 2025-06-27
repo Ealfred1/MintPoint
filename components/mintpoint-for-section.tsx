@@ -7,22 +7,22 @@ const userTypes = [
   {
     id: 1,
     title: "New and existing agents looking for a smarter, cost-free way to run POS",
-    image: "/placeholder.svg?height=300&width=500",
+    image: "/images/who1.jpg",
   },
   {
     id: 2,
     title: "Side hustlers who want to earn extra using just their smartphones",
-    image: "/placeholder.svg?height=300&width=500",
+    image: "/images/who2.jpg",
   },
   {
     id: 3,
     title: "Business owners who want smooth, cashless operations",
-    image: "/placeholder.svg?height=300&width=500",
+    image: "/images/who3.jpg",
   },
   {
     id: 4,
     title: "Everyday users looking for fast, reliable agents nearby",
-    image: "/placeholder.svg?height=300&width=500",
+    image: "/images/who4.jpg",
   },
 ]
 
@@ -59,14 +59,14 @@ export default function MintpointForSection() {
         title.style.zIndex = "auto"
       }
 
-      // Animate content cards based on scroll progress
+      // Animate content cards based on scroll progress - removed opacity animation
       const cards = content.querySelectorAll(".user-card")
       cards.forEach((card, index) => {
         const cardElement = card as HTMLElement
         const cardProgress = Math.max(0, Math.min(1, scrollProgress * userTypes.length - index))
 
         cardElement.style.transform = `translateY(${(1 - cardProgress) * 100}px)`
-        cardElement.style.opacity = cardProgress.toString()
+        // Removed opacity animation - cards will be visible normally
       })
     }
 
@@ -77,19 +77,20 @@ export default function MintpointForSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative min-h-[300vh] bg-black text-white">
+    <section ref={sectionRef} className="relative bg-white min-h-[350vh] text-white">
+      
       {/* Fixed Title */}
-      <div ref={titleRef} className="w-1/3 p-12 transition-all duration-300">
-        <h2 className="text-4xl md:text-6xl font-bold leading-tight">WHO'S MINTPOINT FOR?</h2>
+      <div ref={titleRef} className="relative z-10 w-1/3 p-12 transition-all duration-300">
+        <h2 className="text-4xl font-bold text-black leading-tight">WHO'S MINTPOINT FOR?</h2>
       </div>
 
       {/* Scrolling Content */}
-      <div ref={contentRef} className="absolute top-0 right-0 w-2/3 min-h-full p-12 pt-32">
+      <div ref={contentRef} className="absolute top-0 right-0 w-2/3 min-h-full p-12 pt-32 z-5">
         <div className="space-y-8">
           {userTypes.map((userType, index) => (
             <div
               key={userType.id}
-              className="user-card relative rounded-3xl overflow-hidden bg-gray-900 opacity-0 transform translate-y-24 transition-all duration-700"
+              className="user-card relative rounded-3xl overflow-hidden bg-gray-900 transform translate-y-24 transition-all duration-700"
               style={{ height: "400px" }}
             >
               <Image src={userType.image || "/placeholder.svg"} alt={userType.title} fill className="object-cover" />

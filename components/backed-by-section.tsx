@@ -1,15 +1,16 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import Image from "next/image"
 
 const companies = [
-  { name: "Sudo", color: "text-black" },
-  { name: "Africard", color: "text-gray-800" },
-  { name: "TransactPro", color: "text-blue-600" },
-  { name: "POS", color: "text-gray-600" },
-  { name: "AgendaRadar", color: "text-gray-700" },
-  { name: "Safepay", color: "text-blue-500" },
-  { name: "IdentityPass", color: "text-purple-600" },
+  { name: "Sudo", image: "/images/sudo.png" },
+  { name: "Africard", image: "/images/africard.png" },
+  { name: "TransactPro", image: "/images/transactpro.png" },
+  { name: "POS", image: "/images/pos.png" },
+  { name: "AgendaRadar", image: "/images/AgendaRadar.svg" },
+  { name: "Safepay", image: "/images/safepay.png" },
+  { name: "IdentityPass", image: "/images/identitypass.png" },
 ]
 
 export default function BackedBySection() {
@@ -56,7 +57,13 @@ export default function BackedBySection() {
               className="company-logo opacity-0 transform translate-y-8 transition-all duration-700 hover:scale-110"
             >
               <div className="text-center p-4">
-                <div className={`text-2xl font-bold ${company.color}`}>{company.name}</div>
+                <Image
+                  src={company.image}
+                  alt={company.name}
+                  width={120}
+                  height={60}
+                  className="h-12 w-auto object-contain"
+                />
               </div>
             </div>
           ))}
