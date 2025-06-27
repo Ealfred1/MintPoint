@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { ChevronDown, ChevronUp } from "lucide-react"
+import gsap from "gsap"
 
 const faqs = [
   {
@@ -61,6 +62,58 @@ function MinusIcon({ className = "" }: { className?: string }) {
 
 export default function FAQSection() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(1)
+  // Refs for each FAQ item (for question and answer)
+  const faqRefs = useRef<(HTMLDivElement | null)[]>([])
+  const answerRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  // Animate in all FAQ questions on mount (staggered)
+  useEffect(() => {
+    if (faqRefs.current.length) {
+      gsap.set(faqRefs.current, { opacity: 0, y: 40 })
+      gsap.to(faqRefs.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: "power3.out",
+        overwrite: "auto",
+      })
+    }
+  }, [])
+
+  // Animate answer in/out when openFAQ changes
+  useEffect(() => {
+    answerRefs.current.forEach((el, idx) => {
+      if (!el) return
+      if (faqs[idx].id === openFAQ) {
+        gsap.fromTo(
+          el,
+          { height: 0, opacity: 0, y: 20 },
+          {
+            height: "auto",
+            opacity: 1,
+            y: 0,
+            duration: 0.45,
+            ease: "power2.out",
+            overwrite: "auto",
+            display: "block",
+          }
+        )
+      } else {
+        gsap.to(el, {
+          height: 0,
+          opacity: 0,
+          y: 20,
+          duration: 0.3,
+          ease: "power2.in",
+          overwrite: "auto",
+          onComplete: () => {
+            if (el) el.style.display = "none"
+          },
+        })
+      }
+    })
+  }, [openFAQ])
 
   return (
     <section className="bg-white w-full py-24">
@@ -81,8 +134,12 @@ export default function FAQSection() {
           {/* FAQs */}
           <div className="w-full md:w-1/2">
             <div className="flex flex-col gap-2">
-              {faqs.map((faq) => (
-                <div key={faq.id}>
+              {faqs.map((faq, idx) => (
+                <div
+                  key={faq.id}
+                  ref={el => (faqRefs.current[idx] = el)}
+                  className="overflow-hidden"
+                >
                   <button
                     onClick={() => setOpenFAQ(openFAQ === faq.id ? null : faq.id)}
                     className="w-full flex items-center justify-between py-4 text-left focus:outline-none group"
@@ -98,13 +155,19 @@ export default function FAQSection() {
                       )}
                     </span>
                   </button>
-                  {openFAQ === faq.id && (
+                  <div
+                    ref={el => (answerRefs.current[idx] = el)}
+                    style={{
+                      overflow: "hidden",
+                      display: openFAQ === faq.id ? "block" : "none",
+                    }}
+                  >
                     <div className="pl-0 pr-8 pb-4">
                       <p className="text-[#6F6F6F] text-base md:text-base leading-relaxed">
                         {faq.answer}
                       </p>
                     </div>
-                  )}
+                  </div>
                 </div>
               ))}
             </div>

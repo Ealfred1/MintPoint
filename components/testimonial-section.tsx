@@ -163,7 +163,7 @@ export default function TestimonialSection() {
               {/* Highlighted Quote with bounce effect */}
               <div 
                 ref={highlightRef}
-                className="text-2xl font-bold text-[#008B3A] mb-8 px-6 py-3 bg-green-50 rounded-2xl"
+                className="text-2xl font-bold text-[#008B3A] mb-8 px-6 py-3 rounded-2xl"
               >
                 &quot;<span className="text-[#008B3A]">{testimonials[currentSlide].quote}</span>&quot;
               </div>

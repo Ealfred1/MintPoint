@@ -77,6 +77,7 @@ export default function JoinMovementSection() {
                       width={48}
                       height={48}
                       className="object-cover w-full h-full"
+                      draggable="false"
                     />
                   </div>
                 ))}
@@ -107,6 +108,7 @@ export default function JoinMovementSection() {
                   fill
                   className="object-contain absolute top-0 -rotate-[120deg]"
                   sizes="(max-width: 768px) 400px, (max-width: 1024px) 600px, 800px"
+                  draggable="false"
                 />
               </div>
             </div>

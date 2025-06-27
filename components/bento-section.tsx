@@ -18,7 +18,7 @@ const bentoItems = [
     description: "Nearby users find you easily with AgentRadar",
     bgColor: "#000",
     image: "/images/get-discovered.png",
-    backgroundImage: "/images/bento/radar-bg.png",
+    backgroundImage: "/images/bg-why.png",
     size: "normal",
     imageStyle: { top: "100px", right: "12px", width: "225px", height: "225px", transform: "scale(1.2)" },
     imageClass: "",
@@ -28,7 +28,7 @@ const bentoItems = [
     description: "Use just your phone to run your POS business",
     bgColor: "#000",
     image: "/images/go-hardware.png",
-    backgroundImage: "/images/bento/phone-bg.png",
+    backgroundImage: "/images/bg-why5.png",
     size: "tall",
     imageStyle: { bottom: "-100px", left: "-43px", transform: "scale(2)", width: "319px", height: "319px" },
     imageClass: "",
@@ -38,7 +38,7 @@ const bentoItems = [
     description: "SafePay AI fights fraud while you focus on sales",
     bgColor: "#000",
     image: "/images/stay-secure.png",
-    backgroundImage: "/images/bento/lock-bg.png",
+    backgroundImage: "/images/bg-why3.png",
     size: "tall",
     imageStyle: { bottom: "0px", left: "50%", transform: "translateX(-50%) scale(1.5)", width: "319px", height: "319px" },
     imageClass: "",
@@ -48,7 +48,7 @@ const bentoItems = [
     description: "POS Insight helps you track, learn, and grow",
     bgColor: "#000",
     image: "/images/work-smarter.png",
-    backgroundImage: "/images/bento/chart-bg.png",
+    backgroundImage: "/images/bg-why2.png",
     size: "normal",
     imageStyle: { bottom: "-50px", left: "50%", transform: "translateX(-50%) scale(1.2)" },
      imageClass: "",
@@ -58,7 +58,7 @@ const bentoItems = [
     description: "SupportBot is always online, so you never lose steam",
     bgColor: "#000",
     image: "/images/faq.png",
-    backgroundImage: "/images/faq.png",
+    backgroundImage: "/images/bg-why4.svg",
     size: "wide",
     imageStyle: { bottom: "-40px", right: "20px", width: "319px", height: "319px" },
     imageClass: "",
@@ -104,13 +104,23 @@ export default function BentoSection() {
       key={item.title}
       className={`bento-card relative overflow-hidden rounded-3xl p-8 text-white transform transition-all duration-700 opacity-0 translate-y-8 hover:scale-105 hover:shadow-2xl ${extraClasses}`}
       style={{
-        background: `linear-gradient(to bottom right, rgba(0,0,0,1), rgba(0,0,0,1)), url('${item.backgroundImage}')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        background: `linear-gradient(to bottom right, rgba(0,0,0,1), rgba(0,0,0,1))`,
+        // Remove backgroundImage from here
       }}
     >
       {/* Background overlay for gradient */}
       <div className="absolute inset-0 z-0" style={{ background: "rgba(0,0,0,0.25)" }}></div>
+      {/* Card background image as an inset image */}
+      {item.backgroundImage && (
+        <img
+          src={item.backgroundImage}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none select-none"
+          style={{ opacity: 0.2 }}
+          draggable="false"
+        />
+      )}
       {/* Card content */}
       <div className="relative z-10 h-full flex flex-col pb-20">
         <h3 className={`${item.size === "tall" || item.size === "wide" ? "text-xl mb-4" : "text-lg mb-3"} font-bold leading-tight`}>

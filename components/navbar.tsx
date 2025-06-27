@@ -30,7 +30,7 @@ export default function Navbar() {
       }`}
       style={{ height: 82 }}
     >
-      <div className="max-w-[1440px] mx-auto px-6 md:px-10 py-4 h-full flex items-center">
+      <div className="max-w-[2440px] mx-auto px-6 md:px-10 py-4 h-full flex items-center">
         <div className="flex items-center w-full justify-between h-full">
           {/* Logo */}
           <div className="flex items-center">
