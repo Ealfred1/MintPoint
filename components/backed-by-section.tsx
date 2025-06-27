@@ -42,9 +42,9 @@ export default function BackedBySection() {
                 <Image
                   src={company.image}
                   alt={company.name}
-                  width={100}
-                  height={48}
-                  className="object-contain h-10 md:h-12 w-auto"
+                  width={120}
+                  height={60}
+                  className="object-contain h-12 w-auto"
                 />
               </div>
             ))}
@@ -54,14 +54,6 @@ export default function BackedBySection() {
           @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
-          }
-          @media (max-width: 768px) {
-            .animate-marquee > div {
-              min-width: 80px !important;
-            }
-            .animate-marquee img {
-              height: 32px !important;
-            }
           }
         `}</style>
       </div>
