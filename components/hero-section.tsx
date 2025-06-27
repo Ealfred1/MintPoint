@@ -25,6 +25,81 @@ function useWindowHeightReady() {
   return { windowHeight, ready }
 }
 
+function HeroSectionMobile() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(() => {
+    setIsLoaded(true)
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <section className="block md:hidden relative min-h-screen flex items-end justify-start overflow-hidden">
+      {/* Background Image Slider */}
+      <div className="absolute inset-0">
+        {heroImages.map((image, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentImageIndex ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <Image
+              src={image || "/placeholder.svg"}
+              alt={`Hero background ${index + 1}`}
+              fill
+              className="object-cover"
+              priority={index === 0}
+            />
+            <div className="absolute inset-0 radgrad"></div>
+          </div>
+        ))}
+      </div>
+      {/* Content */}
+      <div className="relative z-10 w-full px-4 pb-10 text-left">
+        <div
+          className={`transition-all duration-1000 delay-300 ${
+            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          <h1
+            className="font-bold mb-4 leading-tight text-3xl sm:text-4xl max-w-[340px]"
+          >
+            WE DON’T JUST GIVE
+            <br />
+            <span className="text-green-400">CASH.</span>WE GIVE CLEAN
+            <br />
+            MONEY!
+          </h1>
+          <p
+            className={`text-base text-white mb-6 max-w-xs transition-all duration-1000 delay-500 ${
+              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            Welcome to Mintpoint, the AI-powered POS. Register today and start using your phone to receive fast card payments with a tap, USSD, and virtual accounts, all in one platform.
+          </p>
+          <div
+            className={`flex flex-col gap-3 transition-all duration-1000 delay-700 ${
+              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            <Button className="bg-white w-full h-[40px] rounded-[26px] hover:bg-gray-100 border border-[#E1E4EA] text-sm text-[#525866] font-medium transition-all duration-300 hover:scale-105">
+              Find Nearby POS
+            </Button>
+            <Button className="bg-[#008B3A] w-full h-[40px] rounded-[26px] text-white text-sm font-medium transition-all duration-300 hover:scale-105 hover:bg-[#008B3A]">
+              Join as an Agent
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function HeroSection() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -78,7 +153,9 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-screen flex items-end justify-start overflow-hidden">
+    <>
+      {/* Desktop version: hidden on mobile */}
+      <section className="relative min-h-screen flex items-end justify-start overflow-hidden hidden md:flex">
       {/* Background Image Slider */}
       <div className="absolute inset-0">
         {heroImages.map((image, index) => (
@@ -99,7 +176,6 @@ export default function HeroSection() {
           </div>
         ))}
       </div>
-
       {/* Content */}
       <div className="relative z-10 w-full max-w-[700px] px-6 pb-12 md:pb-20 lg:pb-24 text-left">
         <div
@@ -108,9 +184,7 @@ export default function HeroSection() {
           }`}
         >
           <h1
-            className={`
-              font-bold mb-6 leading-tight max-w-[669px] ${headingSize}
-            `}
+              className={`font-bold mb-6 leading-tight max-w-[669px] ${headingSize}`}
           >
             WE DON’T JUST GIVE
             <br />
@@ -118,16 +192,13 @@ export default function HeroSection() {
             <br />
             MONEY!
           </h1>
-
           <p
             className={`text-lg md:text-xl text-white mb-8 max-w-2xl transition-all duration-1000 delay-500 ${
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            Welcome to Mintpoint, the AI-powered POS. Register today and start using your phone to receive fast card
-            payments with a tap, USSD, and virtual accounts, all in one platform.
+              Welcome to Mintpoint, the AI-powered POS. Register today and start using your phone to receive fast card payments with a tap, USSD, and virtual accounts, all in one platform.
           </p>
-
           <div
             className={`flex flex-col sm:flex-row gap-4 transition-all duration-1000 delay-700 ${
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -143,5 +214,8 @@ export default function HeroSection() {
         </div>
       </div>
     </section>
+      {/* Mobile version: only on mobile */}
+      <HeroSectionMobile />
+    </>
   )
 }

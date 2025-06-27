@@ -57,6 +57,7 @@ function TestimonialSectionMobile() {
   const startX = useRef<number | null>(null)
   const deltaX = useRef<number>(0)
   const containerRef = useRef<HTMLDivElement>(null)
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   // Touch swipe handlers
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -78,6 +79,16 @@ function TestimonialSectionMobile() {
     startX.current = null
     deltaX.current = 0
   }
+
+  // Auto-slide effect
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % testimonials.length)
+    }, 6000)
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current)
+    }
+  }, [])
 
   return (
     <section className="block md:hidden py-10 bg-white">
@@ -236,80 +247,80 @@ export default function TestimonialSection() {
     <>
       {/* Desktop version: hidden on mobile */}
       <section className="py-20 bg-white hidden md:block">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="mb-12 relative min-h-[500px] flex flex-col items-center justify-center">
-              {/* Animated Testimonial Content */}
-              <div
-                ref={containerRef}
-                className="w-full flex flex-col items-center justify-center"
+      <div className="container mx-auto px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="mb-12 relative min-h-[500px] flex flex-col items-center justify-center">
+            {/* Animated Testimonial Content */}
+            <div
+              ref={containerRef}
+              className="w-full flex flex-col items-center justify-center"
+            >
+              {/* Full Quote with staggered animation */}
+              <p 
+                ref={quoteRef}
+                className="text-lg md:text-[28px] text-[#6F6F6F] mb-8 leading-relaxed max-w-3xl"
               >
-                {/* Full Quote with staggered animation */}
-                <p 
-                  ref={quoteRef}
-                  className="text-lg md:text-[28px] text-[#6F6F6F] mb-8 leading-relaxed max-w-3xl"
-                >
-                  {testimonials[currentSlide].fullQuote}
-                </p>
-                {/* Highlighted Quote with bounce effect */}
-                <div 
-                  ref={highlightRef}
-                  className="text-2xl font-bold text-[#008B3A] mb-8 px-6 py-3 rounded-2xl"
-                >
-                  &quot;<span className="text-[#008B3A]">{testimonials[currentSlide].quote}</span>&quot;
-                </div>
-                {/* User Info with elastic animation */}
-                <div className="flex flex-col items-center justify-center">
-                  {/* Country Flag Image with elastic bounce */}
-                  <div className="flex justify-center mb-4">
-                    <div 
-                      ref={avatarRef}
-                      className="h-[64px] w-[64px] rounded-full overflow-hidden flex items-center justify-center bg-white shadow-lg hover:scale-110 transition-transform duration-300"
-                    >
-                      <Image
-                        src={testimonials[currentSlide].countryImg}
-                        alt="Country flag"
-                        width={64}
-                        height={64}
-                        className="object-contain"
-                      />
-                    </div>
+                {testimonials[currentSlide].fullQuote}
+              </p>
+              {/* Highlighted Quote with bounce effect */}
+              <div 
+                ref={highlightRef}
+                className="text-2xl font-bold text-[#008B3A] mb-8 px-6 py-3 rounded-2xl"
+              >
+                &quot;<span className="text-[#008B3A]">{testimonials[currentSlide].quote}</span>&quot;
+              </div>
+              {/* User Info with elastic animation */}
+              <div className="flex flex-col items-center justify-center">
+                {/* Country Flag Image with elastic bounce */}
+                <div className="flex justify-center mb-4">
+                  <div 
+                    ref={avatarRef}
+                    className="h-[64px] w-[64px] rounded-full overflow-hidden flex items-center justify-center bg-white shadow-lg hover:scale-110 transition-transform duration-300"
+                  >
+                    <Image
+                      src={testimonials[currentSlide].countryImg}
+                      alt="Country flag"
+                      width={64}
+                      height={64}
+                      className="object-contain"
+                    />
                   </div>
-                  <div className="text-center">
-                    <div 
-                      ref={nameRef}
-                      className="font-bold text-lg text-black mb-1"
-                    >
-                      {testimonials[currentSlide].name}
-                    </div>
-                    <div 
-                      ref={roleRef}
-                      className="text-gray-600"
-                    >
-                      {testimonials[currentSlide].role}
-                    </div>
+                </div>
+                <div className="text-center">
+                  <div 
+                    ref={nameRef}
+                    className="font-bold text-lg text-black mb-1"
+                  >
+                    {testimonials[currentSlide].name}
+                  </div>
+                  <div 
+                    ref={roleRef}
+                    className="text-gray-600"
+                  >
+                    {testimonials[currentSlide].role}
                   </div>
                 </div>
               </div>
             </div>
-            {/* Enhanced Carousel Indicators */}
-            <div className="flex justify-center mt-8 space-x-3">
-              {testimonials.map((_, idx) => (
-                <button
-                  key={idx}
-                  className={`h-3 w-3 rounded-full transition-all duration-500 ease-out transform hover:scale-125 ${
-                    idx === currentSlide 
-                      ? "bg-green-600 w-8 shadow-lg" 
-                      : "bg-gray-300 hover:bg-gray-400"
-                  }`}
-                  aria-label={`Go to testimonial ${idx + 1}`}
-                  onClick={() => goToSlide(idx)}
-                />
-              ))}
-            </div>
+          </div>
+          {/* Enhanced Carousel Indicators */}
+          <div className="flex justify-center mt-8 space-x-3">
+            {testimonials.map((_, idx) => (
+              <button
+                key={idx}
+                className={`h-3 w-3 rounded-full transition-all duration-500 ease-out transform hover:scale-125 ${
+                  idx === currentSlide 
+                    ? "bg-green-600 w-8 shadow-lg" 
+                    : "bg-gray-300 hover:bg-gray-400"
+                }`}
+                aria-label={`Go to testimonial ${idx + 1}`}
+                onClick={() => goToSlide(idx)}
+              />
+            ))}
           </div>
         </div>
-      </section>
+      </div>
+    </section>
       {/* Mobile version: only on mobile */}
       <TestimonialSectionMobile />
     </>

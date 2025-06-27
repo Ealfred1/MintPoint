@@ -44,20 +44,20 @@ export default function Footer() {
               </ul>
               {/* App Store Buttons under Quick Links */}
               <div className="flex space-x-4">
-                <img
-                  src="/images/appstore-btn.svg"
-                  alt="Download on the App Store"
-                  className="h-10 w-auto transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer"
-                  draggable="false"
-                />
-                <img
-                  src="/images/playstore-btn.svg"
-                  alt="Download on Play Store"
-                  className="h-10 w-auto transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer"
-                  draggable="false"
-                />
-              </div>
+              <img
+                src="/images/appstore-btn.svg"
+                alt="Download on the App Store"
+                className="h-10 w-auto transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer"
+                draggable="false"
+              />
+              <img
+                src="/images/playstore-btn.svg"
+                alt="Download on Play Store"
+                className="h-10 w-auto transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer"
+                draggable="false"
+              />
             </div>
+          </div>
             {/* Add more space between the two right sections */}
             <div className="hidden md:block" style={{ minWidth: 24 }}></div>
             {/* Get in Touch */}

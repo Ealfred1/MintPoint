@@ -34,11 +34,11 @@ export default function BackedBySection() {
             }}
           >
             {marqueeCompanies.map((company, index) => (
-              <div
-                key={index}
+            <div
+              key={index}
                 className="flex flex-col items-center justify-center px-4"
                 style={{ minWidth: 120 }}
-              >
+            >
                 <Image
                   src={company.image}
                   alt={company.name}
@@ -48,7 +48,7 @@ export default function BackedBySection() {
                 />
               </div>
             ))}
-          </div>
+            </div>
         </div>
         <style jsx global>{`
           @keyframes marquee {
