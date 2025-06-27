@@ -52,6 +52,96 @@ const testimonials = [
   },
 ]
 
+function TestimonialSectionMobile() {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const startX = useRef<number | null>(null)
+  const deltaX = useRef<number>(0)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Touch swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    startX.current = e.touches[0].clientX
+  }
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (startX.current !== null) {
+      deltaX.current = e.touches[0].clientX - startX.current
+    }
+  }
+  const handleTouchEnd = () => {
+    if (deltaX.current > 50) {
+      // Swipe right
+      setCurrentSlide((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+    } else if (deltaX.current < -50) {
+      // Swipe left
+      setCurrentSlide((prev) => (prev + 1) % testimonials.length)
+    }
+    startX.current = null
+    deltaX.current = 0
+  }
+
+  return (
+    <section className="block md:hidden py-10 bg-white">
+      <div className="px-3 w-full max-w-md mx-auto">
+        <div className="min-h-[340px] flex flex-col items-center justify-center">
+          <div
+            ref={containerRef}
+            className="w-full flex flex-col items-center justify-center"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* Full Quote */}
+            <p className="text-sm text-[#6F6F6F] mb-4 leading-relaxed text-center max-w-xs">
+              {testimonials[currentSlide].fullQuote}
+            </p>
+            {/* Highlighted Quote */}
+            <div className="text-base font-bold text-[#008B3A] mb-4 px-4 py-2 rounded-xl text-center">
+              &quot;<span className="text-[#008B3A]">{testimonials[currentSlide].quote}</span>&quot;
+            </div>
+            {/* User Info */}
+            <div className="flex flex-col items-center justify-center">
+              <div className="flex justify-center mb-2">
+                <div className="h-10 w-10 rounded-full overflow-hidden flex items-center justify-center bg-white shadow-md">
+                  <Image
+                    src={testimonials[currentSlide].countryImg}
+                    alt="Country flag"
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="font-bold text-base text-black mb-0.5">
+                  {testimonials[currentSlide].name}
+                </div>
+                <div className="text-gray-600 text-xs">
+                  {testimonials[currentSlide].role}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Carousel Indicators */}
+        <div className="flex justify-center mt-6 space-x-2">
+          {testimonials.map((_, idx) => (
+            <button
+              key={idx}
+              className={`h-2 w-6 rounded-full transition-all duration-300 ease-out transform ${
+                idx === currentSlide 
+                  ? "bg-green-600 w-6" 
+                  : "bg-gray-300 w-2"
+              }`}
+              aria-label={`Go to testimonial ${idx + 1}`}
+              onClick={() => setCurrentSlide(idx)}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function TestimonialSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -143,83 +233,85 @@ export default function TestimonialSection() {
   }, [currentSlide])
 
   return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="mb-12 relative min-h-[500px] flex flex-col items-center justify-center">
-            {/* Animated Testimonial Content */}
-            <div
-              ref={containerRef}
-              className="w-full flex flex-col items-center justify-center"
-            >
-              {/* Full Quote with staggered animation */}
-              <p 
-                ref={quoteRef}
-                className="text-lg md:text-[28px] text-[#6F6F6F] mb-8 leading-relaxed max-w-3xl"
+    <>
+      {/* Desktop version: hidden on mobile */}
+      <section className="py-20 bg-white hidden md:block">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="mb-12 relative min-h-[500px] flex flex-col items-center justify-center">
+              {/* Animated Testimonial Content */}
+              <div
+                ref={containerRef}
+                className="w-full flex flex-col items-center justify-center"
               >
-                {testimonials[currentSlide].fullQuote}
-              </p>
-              
-              {/* Highlighted Quote with bounce effect */}
-              <div 
-                ref={highlightRef}
-                className="text-2xl font-bold text-[#008B3A] mb-8 px-6 py-3 rounded-2xl"
-              >
-                &quot;<span className="text-[#008B3A]">{testimonials[currentSlide].quote}</span>&quot;
-              </div>
-              
-              {/* User Info with elastic animation */}
-              <div className="flex flex-col items-center justify-center">
-                {/* Country Flag Image with elastic bounce */}
-                <div className="flex justify-center mb-4">
-                  <div 
-                    ref={avatarRef}
-                    className="h-[64px] w-[64px] rounded-full overflow-hidden flex items-center justify-center bg-white shadow-lg hover:scale-110 transition-transform duration-300"
-                  >
-                    <Image
-                      src={testimonials[currentSlide].countryImg}
-                      alt="Country flag"
-                      width={64}
-                      height={64}
-                      className="object-contain"
-                    />
-                  </div>
+                {/* Full Quote with staggered animation */}
+                <p 
+                  ref={quoteRef}
+                  className="text-lg md:text-[28px] text-[#6F6F6F] mb-8 leading-relaxed max-w-3xl"
+                >
+                  {testimonials[currentSlide].fullQuote}
+                </p>
+                {/* Highlighted Quote with bounce effect */}
+                <div 
+                  ref={highlightRef}
+                  className="text-2xl font-bold text-[#008B3A] mb-8 px-6 py-3 rounded-2xl"
+                >
+                  &quot;<span className="text-[#008B3A]">{testimonials[currentSlide].quote}</span>&quot;
                 </div>
-                <div className="text-center">
-                  <div 
-                    ref={nameRef}
-                    className="font-bold text-lg text-black mb-1"
-                  >
-                    {testimonials[currentSlide].name}
+                {/* User Info with elastic animation */}
+                <div className="flex flex-col items-center justify-center">
+                  {/* Country Flag Image with elastic bounce */}
+                  <div className="flex justify-center mb-4">
+                    <div 
+                      ref={avatarRef}
+                      className="h-[64px] w-[64px] rounded-full overflow-hidden flex items-center justify-center bg-white shadow-lg hover:scale-110 transition-transform duration-300"
+                    >
+                      <Image
+                        src={testimonials[currentSlide].countryImg}
+                        alt="Country flag"
+                        width={64}
+                        height={64}
+                        className="object-contain"
+                      />
+                    </div>
                   </div>
-                  <div 
-                    ref={roleRef}
-                    className="text-gray-600"
-                  >
-                    {testimonials[currentSlide].role}
+                  <div className="text-center">
+                    <div 
+                      ref={nameRef}
+                      className="font-bold text-lg text-black mb-1"
+                    >
+                      {testimonials[currentSlide].name}
+                    </div>
+                    <div 
+                      ref={roleRef}
+                      className="text-gray-600"
+                    >
+                      {testimonials[currentSlide].role}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          
-          {/* Enhanced Carousel Indicators */}
-          <div className="flex justify-center mt-8 space-x-3">
-            {testimonials.map((_, idx) => (
-              <button
-                key={idx}
-                className={`h-3 w-3 rounded-full transition-all duration-500 ease-out transform hover:scale-125 ${
-                  idx === currentSlide 
-                    ? "bg-green-600 w-8 shadow-lg" 
-                    : "bg-gray-300 hover:bg-gray-400"
-                }`}
-                aria-label={`Go to testimonial ${idx + 1}`}
-                onClick={() => goToSlide(idx)}
-              />
-            ))}
+            {/* Enhanced Carousel Indicators */}
+            <div className="flex justify-center mt-8 space-x-3">
+              {testimonials.map((_, idx) => (
+                <button
+                  key={idx}
+                  className={`h-3 w-3 rounded-full transition-all duration-500 ease-out transform hover:scale-125 ${
+                    idx === currentSlide 
+                      ? "bg-green-600 w-8 shadow-lg" 
+                      : "bg-gray-300 hover:bg-gray-400"
+                  }`}
+                  aria-label={`Go to testimonial ${idx + 1}`}
+                  onClick={() => goToSlide(idx)}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      {/* Mobile version: only on mobile */}
+      <TestimonialSectionMobile />
+    </>
   )
 }
