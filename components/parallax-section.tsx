@@ -67,7 +67,7 @@ function ParallaxSectionMobile() {
         <div
           key={src}
           ref={el => { if (el) slidesRef.current[index] = el }}
-          className="absolute inset-0 w-full h-full transition-all duration-700"
+          className="absolute inset-0 w-full h-screen transition-all duration-700"
           style={{ zIndex: parallaxImages.length - index }}
         >
           <img
