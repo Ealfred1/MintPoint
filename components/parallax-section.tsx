@@ -20,11 +20,11 @@ function ParallaxSectionMobile() {
     <section className="block md:hidden w-full bg-white z-[60] relative mb-40 py-10">
       <div className="flex flex-col items-center gap-8">
         {parallaxImages.map((src, index) => (
-          <div key={src} className="w-full flex justify-center">
+          <div key={src} className="w-full h-[400px] flex justify-center">
             <img
               src={src}
               alt={`parallax slide ${index + 1}`}
-              className="object-cover bg-black rounded-xl w-full max-w-xs"
+              className="object-cover bg-white rounded-xl w-full max-w-xs"
               draggable="false"
             />
           </div>
