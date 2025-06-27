@@ -44,7 +44,7 @@ function ParallaxSectionMobile() {
             gsap.set(slide, { yPercent: -100 })
           } else if (i === index) {
             gsap.set(slide, { yPercent: 0 })
-          } else {
+    } else {
             gsap.set(slide, { yPercent: 100 })
           }
         })
@@ -75,8 +75,8 @@ function ParallaxSectionMobile() {
             alt="parallax slide"
             className="absolute inset-0 w-full h-screen object-fit bg-black transition-all duration-700"
             draggable="false"
-          />
-        </div>
+                      />
+                    </div>
       ))}
       {/* Infinite Marquee (same as desktop) */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none">

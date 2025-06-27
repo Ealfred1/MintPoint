@@ -48,7 +48,8 @@ function TrustedBySectionMobile() {
           TRUSTED BY AGENTS OF LEADING<br />POS COMPANIES
         </h2>
         <p className="text-sm text-[#6F6F6F] max-w-xs mx-auto">
-          Mintpoint powers agents across more than 15 top-tier POS platforms.<br />From small-town operators to high-volume hubs, they all trust Mintpoint.
+          Mintpoint powers agents across more than 15 top-tier POS platforms.<br />
+          From small-town vendors to high-volume operators, professionals across Nigeria trust Mintpoint to deliver fast, reliable, and intelligent payment&nbsp;solutions.
         </p>
       </div>
       {/* Infinite Scrolling Marquee */}
@@ -117,7 +118,7 @@ export default function TrustedBySection() {
           <p className="text-lg md:text-[18px] text-[#6F6F6F] max-w-3xl mx-auto">
             Mintpoint powers agents across more than 15 top-tier POS platforms.
             <br />
-            From small-town operators to high-volume hubs, they all trust Mintpoint.
+            From small-town vendors to high-volume operators, professionals across Nigeria trust Mintpoint to deliver fast, reliable, and intelligent payment&nbsp;solutions.
           </p>
         </div>
         {/* Infinite Scrolling Marquee */}

@@ -26,6 +26,9 @@ const userTypes = [
   },
 ]
 
+const descriptionText =
+  "Mintpoint is designed to empower anyone who wants to receive or process payments easily, securely, and without the need for physical POS hardware. Whether you're earning, selling, or searching for nearby agent, Mintpoint fits right into your lifestyle."
+
 function MintpointForSectionMobile() {
   const sectionRef = useRef<HTMLElement>(null)
   const titleRef = useRef<HTMLDivElement>(null)
@@ -40,31 +43,30 @@ function MintpointForSectionMobile() {
       const windowHeight = window.innerHeight
 
       // Fix title at top center when section is in view
-      if (sectionRect.top <= 0 && sectionRect.bottom >= windowHeight) {
-        title.style.position = "fixed"
-        title.style.top = "0px"
-        title.style.left = "0"
-        title.style.right = "0"
-        title.style.margin = "0 auto"
-        title.style.zIndex = "40"
-        title.style.width = "100vw"
-        title.style.textAlign = "center"
-        title.style.background = "white"
-        title.style.padding = "20px 0"
-        title.style.boxShadow = "0 2px 8px 0 rgba(0,0,0,0.03)"
-      } else {
-        title.style.position = "relative"
-        title.style.top = "auto"
-        title.style.left = "auto"
-        title.style.right = "auto"
-        title.style.margin = ""
-        title.style.zIndex = "auto"
-        title.style.width = "100%"
-        title.style.textAlign = "center"
-        title.style.background = "transparent"
-        title.style.padding = "0"
-        title.style.boxShadow = "none"
-      }
+      // if (sectionRect.top <= 0 && sectionRect.bottom >= windowHeight) {
+      //   title.style.position = "fixed"
+      //   title.style.top = "0px"
+      //   title.style.left = "0"
+      //   title.style.right = "0"
+      //   title.style.margin = "0 auto"
+      //   title.style.zIndex = "100"
+      //   title.style.width = "100vw"
+      //   title.style.textAlign = "center"
+      //   title.style.background = "white"
+      //   title.style.padding = "20px 10px"
+      // } else {
+      //   title.style.position = "relative"
+      //   title.style.top = "auto"
+      //   title.style.left = "auto"
+      //   title.style.right = "auto"
+      //   title.style.margin = ""
+      //   title.style.zIndex = "auto"
+      //   title.style.width = "100%"
+      //   title.style.textAlign = "center"
+      //   title.style.background = "transparent"
+      //   title.style.padding = "0"
+      //   title.style.boxShadow = "none"
+      // }
     }
 
     window.addEventListener("scroll", handleScroll)
@@ -75,8 +77,11 @@ function MintpointForSectionMobile() {
   return (
     <section ref={sectionRef} className="block md:hidden relative bg-white min-h-[200vh] text-white pb-8">
       {/* Fixed Title */}
-      <div ref={titleRef} className="relative bg-white z-[60] w-full px-4 pt-6">
+      <div ref={titleRef} className="relative bg-white  z-[70] transition-all duration-300 w-full px-4 pt-6">
         <h2 className="text-2xl font-bold text-black leading-tight">WHO'S MINTPOINT FOR?</h2>
+        <p className="text-sm text-black/80 mt-3">
+          {descriptionText}
+        </p>
       </div>
       {/* Cards */}
       <div className="flex flex-col gap-6 px-4 pt-28">
@@ -155,6 +160,9 @@ export default function MintpointForSection() {
         {/* Fixed Title */}
         <div ref={titleRef} className="relative z-10 w-1/3 p-12 transition-all duration-300">
           <h2 className="text-4xl font-bold text-black leading-tight">WHO'S MINTPOINT FOR?</h2>
+          <p className="text-lg text-black/80 mt-4">
+            {descriptionText}
+          </p>
         </div>
         {/* Scrolling Content */}
         <div ref={contentRef} className="absolute top-0 right-0 w-2/3 min-h-full p-12 pt-32 z-5">
