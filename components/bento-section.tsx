@@ -65,6 +65,78 @@ const bentoItems = [
   },
 ]
 
+// Mobile component moved outside to prevent re-creation on every render
+function BentoSectionMobile() {
+  // Use the same imageStyle for all cards as 'ACCEPT ALL PAYMENTS',
+  // but override for 'GO HARDWARE-FREE' and 'WORK SMARTER'
+  const mobileImageStyle = { bottom: "-10px", left: "50%", transform: "translateX(-50%) scale(1.5)" }
+  return (
+    <section className="block md:hidden py-10 bg-white text-black">
+      <div className="px-4">
+        <div className="mb-10">
+          <h2 className="text-2xl font-bold mb-4">WHY MINTPOINT?</h2>
+          <p className="text-base text-gray-600 max-w-xs">
+            Mintpoint is not just a soft POS. It's your full financial assistant. Whether you're a roadside agent or a retail business, we give you the tools to:
+          </p>
+        </div>
+        <div className="flex flex-col gap-6">
+          {bentoItems.map((item, idx) => {
+            // Custom style for GO HARDWARE-FREE and WORK SMARTER
+            let customImageStyle = mobileImageStyle
+            let customImgSize = { width: 120, height: 120 }
+            if (item.title === "GO HARDWARE-FREE") {
+              customImageStyle = { bottom: "-32px", left: "50%", transform: "translateX(-50%) scale(1.9)" }
+              customImgSize = { width: 160, height: 160 }
+            } else if (item.title === "WORK SMARTER") {
+              customImageStyle = { bottom: "-32px", left: "50%", transform: "translateX(-50%) scale(1.2)" }
+              customImgSize = { width: 160, height: 160 }
+            }
+            return (
+              <div
+                key={item.title}
+                className="bento-card relative overflow-hidden rounded-2xl p-5 text-white bg-black"
+                style={{ minHeight: 220 }}
+              >
+                {/* Background overlay for gradient */}
+                <div className="absolute inset-0 z-0" style={{ background: "rgba(0,0,0,0.25)" }}></div>
+                {/* Card background image as an inset image */}
+                {item.backgroundImage && (
+                  <img
+                    src={item.backgroundImage}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none select-none"
+                    style={{ opacity: 0.2 }}
+                    draggable="false"
+                  />
+                )}
+                {/* Card content */}
+                <div className="relative z-10 h-full flex flex-col pb-20">
+                  <h3 className="text-base font-bold mb-2 leading-tight">{item.title}</h3>
+                  <p className="text-xs text-white/80 leading-relaxed">{item.description}</p>
+                </div>
+                {/* Icon image, positioned absolutely at the bottom using customImageStyle */}
+                <div
+                  className={`z-20 absolute`}
+                  style={customImageStyle}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title + " icon"}
+                    className="object-contain drop-shadow-lg"
+                    draggable="false"
+                    style={{ width: customImgSize.width, height: customImgSize.height, maxWidth: "100%", maxHeight: "100%" }}
+                  />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function BentoSection() {
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -145,81 +217,10 @@ export default function BentoSection() {
     </div>
   )
 
-  function BentoSectionMobile() {
-    // Use the same imageStyle for all cards as 'ACCEPT ALL PAYMENTS',
-    // but override for 'GO HARDWARE-FREE' and 'WORK SMARTER'
-    const mobileImageStyle = { bottom: "-10px", left: "50%", transform: "translateX(-50%) scale(1.5)" }
-    return (
-      <section className="block md:hidden py-10 bg-white text-black">
-        <div className="px-4">
-          <div className="mb-10">
-            <h2 className="text-2xl font-bold mb-4">WHY MINTPOINT?</h2>
-            <p className="text-base text-gray-600 max-w-xs">
-              Mintpoint is not just a soft POS. It's your full financial assistant. Whether you're a roadside agent or a retail business, we give you the tools to:
-            </p>
-          </div>
-          <div className="flex flex-col gap-6">
-            {bentoItems.map((item, idx) => {
-              // Custom style for GO HARDWARE-FREE and WORK SMARTER
-              let customImageStyle = mobileImageStyle
-              let customImgSize = { width: 120, height: 120 }
-              if (item.title === "GO HARDWARE-FREE") {
-                customImageStyle = { bottom: "-32px", left: "50%", transform: "translateX(-50%) scale(1.9)" }
-                customImgSize = { width: 160, height: 160 }
-              } else if (item.title === "WORK SMARTER") {
-                customImageStyle = { bottom: "-32px", left: "50%", transform: "translateX(-50%) scale(1.2)" }
-                customImgSize = { width: 160, height: 160 }
-              }
-              return (
-                <div
-                  key={item.title}
-                  className="bento-card relative overflow-hidden rounded-2xl p-5 text-white bg-black"
-                  style={{ minHeight: 220 }}
-                >
-                  {/* Background overlay for gradient */}
-                  <div className="absolute inset-0 z-0" style={{ background: "rgba(0,0,0,0.25)" }}></div>
-                  {/* Card background image as an inset image */}
-                  {item.backgroundImage && (
-                    <img
-                      src={item.backgroundImage}
-                      alt=""
-                      aria-hidden="true"
-                      className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none select-none"
-                      style={{ opacity: 0.2 }}
-                      draggable="false"
-                    />
-                  )}
-                  {/* Card content */}
-                  <div className="relative z-10 h-full flex flex-col pb-20">
-                    <h3 className="text-base font-bold mb-2 leading-tight">{item.title}</h3>
-                    <p className="text-xs text-white/80 leading-relaxed">{item.description}</p>
-                  </div>
-                  {/* Icon image, positioned absolutely at the bottom using customImageStyle */}
-                  <div
-                    className={`z-20 absolute`}
-                    style={customImageStyle}
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.title + " icon"}
-                      className="object-contain drop-shadow-lg"
-                      draggable="false"
-                      style={{ width: customImgSize.width, height: customImgSize.height, maxWidth: "100%", maxHeight: "100%" }}
-                    />
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-    )
-  }
-
   return (
     <>
       {/* Desktop version: hidden on mobile */}
-      <section ref={sectionRef} className="py-20 bg-white text-black hidden md:block">
+      <section ref={sectionRef} className="py-20 bg-white sticky top-[-35rem] z-25 text-black hidden md:block">
         <div className="container mx-auto px-6">
           <div className="mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">WHY MINTPOINT?</h2>

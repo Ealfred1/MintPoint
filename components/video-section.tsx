@@ -215,22 +215,22 @@ export default function VideoSection() {
     <>
       {/* Desktop version: hidden on mobile */}
       <section ref={sectionRef} className="py-20 bg-black animate-on-scroll hidden md:block">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-[37px] font-bold mb-6">EXPERIENCE A NEW WAY FORWARD</h2>
+      <div className="container mx-auto px-6 text-center">
+        <h2 className="text-4xl md:text-[37px] font-bold mb-6">EXPERIENCE A NEW WAY FORWARD</h2>
 
-          <p className="text-lg font-medium text-white/80 mb-12 max-w-3xl mx-auto">
+        <p className="text-lg font-medium text-white/80 mb-12 max-w-3xl mx-auto">
             No hardware? No problem. No hardware required, just download the Mintpoint App to start accepting contactless payments.
-          </p>
+        </p>
 
-          {/* App Store Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <img src="/images/appstore-btn.svg" alt="Download on the App Store" className="transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer" draggable="false" />
-            <img src="/images/playstore-btn.svg" alt="Download on Play Store" className="transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer" draggable="false" />
-          </div>
+        {/* App Store Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+          <img src="/images/appstore-btn.svg" alt="Download on the App Store" className="transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer" draggable="false" />
+          <img src="/images/playstore-btn.svg" alt="Download on Play Store" className="transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer" draggable="false" />
+        </div>
 
-          {/* Video Placeholder */}
-          <div className="relative max-w-4xl mx-auto">
-            <div className="aspect-video bg-gray-900 rounded-2xl overflow-hidden relative group cursor-pointer">
+        {/* Video Placeholder */}
+        <div className="relative max-w-4xl mx-auto">
+          <div className="aspect-video bg-gray-900 rounded-2xl overflow-hidden relative group cursor-pointer">
               <video
                 ref={videoRef}
                 src="/video/video.mp4"
@@ -255,14 +255,14 @@ export default function VideoSection() {
                       {/* Show the Pay icon from lucide-react */}
                       <Play className="w-10 h-10 text-white" />
                     </div>
-                  </div>
+              </div>
                   <div className="absolute inset-0 bg-black/20 pointer-events-none z-10"></div>
                 </>
               )}
-            </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
       {/* Mobile version: only on mobile */}
       <VideoSectionMobile />
     </>

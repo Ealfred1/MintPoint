@@ -38,7 +38,7 @@ export default function HomePage() {
   }, [])
 
   return (
-    <main className="min-h-screen bg-black text-white overflow-x-hidden">
+    <main className="min-h-screen bg-white text-white overflow-x-hidden">
       <Navbar />
       <HeroSection />
       <VideoSection />
