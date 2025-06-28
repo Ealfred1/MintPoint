@@ -142,7 +142,7 @@ function CustomVideoPlayer({
 
   // Style for the phone-like video container
   const phoneStyle = {
-    width: mobile ? 220 : width,
+    width: mobile ? 320 : 600,
     height: mobile ? 440 : height,
     borderRadius: rounded,
     boxShadow: "0 4px 32px 0 rgba(0,0,0,0.18)",
