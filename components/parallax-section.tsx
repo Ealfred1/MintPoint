@@ -1,8 +1,18 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import Image from "next/image"
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Pagination, EffectCoverflow, Autoplay } from "swiper/modules"
+import type { Swiper as SwiperType } from "swiper"
+// Import Swiper styles
+import "swiper/css"
+import "swiper/css/pagination"
+import "swiper/css/effect-coverflow"
+import "swiper/css/navigation"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -14,22 +24,81 @@ const parallaxImages = [
   "/images/parallax-5.svg",
 ]
 
-// Mobile version: just render all images normally, no parallax, no slider, no pin
+// Mobile version: Swiper-based carousel, only on mobile
 function ParallaxSectionMobile() {
+  const [activeSlide, setActiveSlide] = useState(0)
+  const swiperRef = useRef<SwiperType | null>(null)
+
+  const goToSlide = (index: number) => {
+    if (swiperRef.current) {
+      swiperRef.current.slideToLoop(index)
+    }
+  }
+
   return (
-    <section className="block md:hidden w-full bg-white z-[60] relative mb-5">
-      <div className="flex flex-col items-center gap-">
-        {parallaxImages.map((src, index) => (
-          <div key={src} className="w-full h-[400px] flex justify-center">
-            <img
-              src={src}
-              alt={`parallax slide ${index + 1}`}
-              className="object-cover bg-white w-full"
-              draggable="false"
+    <section className="block md:hidden w-full bg-white py-10 lg:min-h-[700px]">
+      <div className="relative">
+        <Swiper
+          modules={[Pagination, EffectCoverflow, Autoplay]}
+          effect="coverflow"
+          grabCursor={true}
+          centeredSlides={true}
+          slidesPerView="auto"
+          coverflowEffect={{
+            rotate: 0,
+            stretch: 0,
+            depth: 100,
+            modifier: 2,
+            slideShadows: false,
+          }}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
+          loop={true}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper
+          }}
+          onSlideChange={(swiper) => setActiveSlide(swiper.realIndex)}
+          className="parallax-swiper-mobile"
+        >
+          {parallaxImages.map((src, index) => (
+            <SwiperSlide key={index} className="!w-[300px]">
+              <div className="relative h-[350px] rounded-2xl overflow-hidden mx-2 shadow-lg">
+                <Image src={src} alt={`Slide ${index + 1}`} fill className="object-cover" />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        {/* Custom Indicators */}
+        <div className="flex justify-center mt-8 space-x-3">
+          {parallaxImages.map((_, idx) => (
+            <button
+              key={idx}
+              className={`h-3 w-3 rounded-full transition-all duration-300 hover:scale-125 ${
+                idx === activeSlide ? "bg-gray-800 w-8 shadow-lg" : "bg-gray-300 opacity-40 hover:opacity-70"
+              }`}
+              onClick={() => goToSlide(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
             />
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
+      <style jsx global>{`
+        .parallax-swiper-mobile {
+          padding: 20px 0 40px 0;
+        }
+        .parallax-swiper-mobile .swiper-slide {
+          transition: transform 0.4s ease;
+        }
+        .parallax-swiper-mobile .swiper-slide:not(.swiper-slide-active) {
+          transform: scale(0.85);
+        }
+        .parallax-swiper-mobile .swiper-slide-active {
+          transform: scale(1);
+          opacity: 1;
+        }
+      `}</style>
     </section>
   )
 }

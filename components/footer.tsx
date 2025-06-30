@@ -27,6 +27,21 @@ export default function Footer() {
               <h3 className="text-base font-semibold mb-6">Quick Links</h3>
               <ul className="space-y-4 text-sm mb-6">
                 <li>
+                  <a href="/about" className="text-gray-400 hover:text-white transition-colors">
+                    About Us
+                  </a>
+                </li>
+                <li>
+                  <a href="/privacy" className="text-gray-400 hover:text-white transition-colors">
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="/terms" className="text-gray-400 hover:text-white transition-colors">
+                    Terms & Conditions
+                  </a>
+                </li>
+                <li>
                   <a href="#" className="text-gray-400 hover:text-white transition-colors">
                     Become an Agent
                   </a>

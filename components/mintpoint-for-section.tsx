@@ -79,9 +79,9 @@ function MintpointForSectionMobile() {
       {/* Fixed Title */}
       <div ref={titleRef} className="relative bg-white  z-[70] transition-all duration-300 w-full px-4 pt-6">
         <h2 className="text-2xl font-bold text-black leading-tight">WHO'S MINTPOINT FOR?</h2>
-        <p className="text-sm text-black/80 mt-3">
+        {/* <p className="text-sm text-black/80 mt-3">
           {descriptionText}
-        </p>
+        </p> */}
       </div>
       {/* Cards */}
       <div className="flex flex-col gap-6 px-4 pt-6">

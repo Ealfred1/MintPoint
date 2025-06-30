@@ -7,7 +7,7 @@ const companies = [
   { name: "Africard", image: "/images/africard.png" },
   { name: "TransactPro", image: "/images/transactpro.png" },
   { name: "POS", image: "/images/pos.png" },
-  { name: "AgendaRadar", image: "/images/AgendaRadar.svg" },
+  { name: "AgendaRadar", image: "/AgentRadar.svg" },
   { name: "Safepay", image: "/images/safepay.png" },
   { name: "IdentityPass", image: "/images/identitypass.png" },
 ]

@@ -7,38 +7,53 @@ import gsap from "gsap"
 const faqs = [
   {
     id: 1,
-    question: "Is the Mintpoint app free to use?",
-    answer: "Absolutely. Download the app from the App Store or Google Play for free, no subscription fees.",
+    question: "What is Mintpoint?",
+    answer: "Mintpoint is a smart, AI-powered soft POS platform that allows agents to accept payments and run a POS business using just their smartphone — no hardware needed. It also helps users find nearby agents for fast cash transactions.",
   },
   {
     id: 2,
-    question: "What makes Mintpoint cash different from regular cash?",
-    answer:
-      "Mintpoint enables digital transactions through your smartphone, eliminating the need for physical cash handling while providing instant, secure payments.",
+    question: "Do I need to buy a POS machine to use Mintpoint?",
+    answer: "No! That's the beauty of Mintpoint. Your smartphone becomes the POS. You can receive card payments through tap, USSD, virtual accounts, and more — all without spending money on traditional POS hardware.",
   },
   {
     id: 3,
-    question: "How do I find a Mintpoint agent near me?",
-    answer:
-      "Use our AgentRadar feature in the app to locate verified Mintpoint agents in your area. You can see their availability and distance from your location.",
+    question: "How do customers find me if I'm an agent?",
+    answer: "With AgentRadar, nearby users can see your POS location in real time, especially when you're available and have cash. You can also upload photos of your stand to make it easier to identify you.",
   },
   {
     id: 4,
-    question: "Who are the agents, and how are they verified?",
-    answer:
-      "Our agents are verified individuals and businesses who have completed our registration process. They undergo background checks and maintain high service standards.",
+    question: "Is Mintpoint safe and secure?",
+    answer: "Yes. SafePay AI constantly monitors for suspicious activity and alerts you instantly if something feels off. We prioritize fraud prevention, so you can do business with peace of mind.",
   },
   {
     id: 5,
-    question: "How can I become a Mintpoint agent?",
-    answer:
-      "Download the app, complete the agent registration process, verify your identity, and start earning by providing POS services in your community.",
+    question: "What kind of payments can I accept?",
+    answer: "You can accept card payments (via tap), USSD codes, bank transfers, and payments through virtual accounts. We support major Nigerian banks and card networks.",
   },
   {
     id: 6,
-    question: "What if an agent runs out of cash?",
-    answer:
-      "Our system monitors agent cash levels in real-time. If an agent is low on cash, the app will redirect you to nearby agents with available funds.",
+    question: "Can I use Mintpoint if I'm already an agent with another POS company?",
+    answer: "Absolutely. Mintpoint is designed to work alongside your current setup. Many of our agents use it to expand their service or reduce costs.",
+  },
+  {
+    id: 7,
+    question: "What do I need to get started?",
+    answer: "All you need is a smartphone, your BVN or NIN for verification, and a bank account to receive payments. Once you register, you can start using Mintpoint almost immediately.",
+  },
+  {
+    id: 8,
+    question: "Is there any registration or monthly fee?",
+    answer: "No registration fee. No monthly charges. You only pay small transaction fees, just like traditional POS systems — but with more features and flexibility.",
+  },
+  {
+    id: 9,
+    question: "What happens if I run into issues?",
+    answer: "Our 24/7 SupportBot is always available in-app to help you with anything — whether it's a failed transaction, a setup issue, or something technical. You can also escalate to a human when needed.",
+  },
+  {
+    id: 10,
+    question: "Can users really find agents with cash near them?",
+    answer: "Yes. Mintpoint users can see nearby agents who have marked themselves as 'cash available.' This helps reduce wasted trips and ensures you always find cash when you need it.",
   },
 ]
 
@@ -123,12 +138,7 @@ export default function FAQSection() {
           <div className="w-full md:w-1/2 md:pr-16 mb-10 md:mb-0">
             <h2 className="text-4xl md:text-6xl font-bold text-black leading-tight mb-6">FAQs</h2>
             <p className="text-lg text-[#6F6F6F] leading-relaxed">
-              Everything you need to know about the product and billing. Can't find the answer you're looking for?
-              Please{" "}
-              <a href="#" className="text-green-500 underline">
-                chat to our friendly team
-              </a>
-              .
+            Everything you need to know about Mintpoint by Africard.
             </p>
           </div>
           {/* FAQs */}

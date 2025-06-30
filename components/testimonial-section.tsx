@@ -3,6 +3,13 @@
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import gsap from "gsap"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Pagination, EffectCoverflow, Autoplay } from "swiper/modules"
+import type { Swiper as SwiperType } from "swiper"
+import "swiper/css"
+import "swiper/css/pagination"
+import "swiper/css/effect-coverflow"
+import "swiper/css/navigation"
 
 const testimonials = [
   {
@@ -53,102 +60,110 @@ const testimonials = [
 ]
 
 function TestimonialSectionMobile() {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const startX = useRef<number | null>(null)
-  const deltaX = useRef<number>(0)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const [activeSlide, setActiveSlide] = useState(0)
+  const swiperRef = useRef<SwiperType | null>(null)
 
-  // Touch swipe handlers
-  const handleTouchStart = (e: React.TouchEvent) => {
-    startX.current = e.touches[0].clientX
-  }
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (startX.current !== null) {
-      deltaX.current = e.touches[0].clientX - startX.current
+  const goToSlide = (index: number) => {
+    if (swiperRef.current) {
+      swiperRef.current.slideToLoop(index)
     }
   }
-  const handleTouchEnd = () => {
-    if (deltaX.current > 50) {
-      // Swipe right
-      setCurrentSlide((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-    } else if (deltaX.current < -50) {
-      // Swipe left
-      setCurrentSlide((prev) => (prev + 1) % testimonials.length)
-    }
-    startX.current = null
-    deltaX.current = 0
-  }
-
-  // Auto-slide effect
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % testimonials.length)
-    }, 6000)
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current)
-    }
-  }, [])
 
   return (
     <section className="block md:hidden py-10 bg-white">
       <div className="px-3 w-full max-w-md mx-auto">
-        <div className="min-h-[340px] flex flex-col items-center justify-center">
-          <div
-            ref={containerRef}
-            className="w-full flex flex-col items-center justify-center"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            {/* Full Quote */}
-            <p className="text-sm text-[#6F6F6F] mb-4 leading-relaxed text-center max-w-xs">
-              {testimonials[currentSlide].fullQuote}
-            </p>
-            {/* Highlighted Quote */}
-            <div className="text-base font-bold text-[#008B3A] mb-4 px-4 py-2 rounded-xl text-center">
-              &quot;<span className="text-[#008B3A]">{testimonials[currentSlide].quote}</span>&quot;
-            </div>
-            {/* User Info */}
-            <div className="flex flex-col items-center justify-center">
-              <div className="flex justify-center mb-2">
-                <div className="h-10 w-10 rounded-full overflow-hidden flex items-center justify-center bg-white shadow-md">
-                  <Image
-                    src={testimonials[currentSlide].countryImg}
-                    alt="Country flag"
-                    width={40}
-                    height={40}
-                    className="object-contain"
-                  />
+        <Swiper
+          modules={[Pagination, EffectCoverflow, Autoplay]}
+          effect="coverflow"
+          grabCursor={true}
+          centeredSlides={true}
+          coverflowEffect={{
+            rotate: 0,
+            stretch: 0,
+            depth: 100,
+            modifier: 2,
+            slideShadows: false,
+          }}
+          autoplay={{
+            delay: 6000,
+            disableOnInteraction: false,
+          }}
+          loop={true}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper
+          }}
+          onSlideChange={(swiper) => setActiveSlide(swiper.realIndex)}
+          className="testimonial-swiper-mobile"
+        >
+          {testimonials.map((t, index) => (
+            <SwiperSlide key={t.id} className="!w-full">
+              <div className="min-h-[340px] flex flex-col items-center justify-center">
+                {/* Full Quote */}
+                <p className="text-sm text-[#6F6F6F] mb-4 leading-relaxed text-center max-w-xs">
+                  {t.fullQuote}
+                </p>
+                {/* Highlighted Quote */}
+                <div className="text-base font-bold text-[#008B3A] mb-4 px-4 py-2 rounded-xl text-center">
+                  &quot;<span className="text-[#008B3A]">{t.quote}</span>&quot;
+                </div>
+                {/* User Info */}
+                <div className="flex flex-col items-center justify-center">
+                  <div className="flex justify-center mb-2">
+                    <div className="h-10 w-10 rounded-full overflow-hidden flex items-center justify-center bg-white shadow-md">
+                      <Image
+                        src={t.countryImg}
+                        alt="Country flag"
+                        width={40}
+                        height={40}
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="font-bold text-base text-black mb-0.5">
+                      {t.name}
+                    </div>
+                    <div className="text-gray-600 text-xs">
+                      {t.role}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="text-center">
-                <div className="font-bold text-base text-black mb-0.5">
-                  {testimonials[currentSlide].name}
-                </div>
-                <div className="text-gray-600 text-xs">
-                  {testimonials[currentSlide].role}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
         {/* Carousel Indicators */}
         <div className="flex justify-center mt-6 space-x-2">
           {testimonials.map((_, idx) => (
             <button
               key={idx}
               className={`h-2 w-6 rounded-full transition-all duration-300 ease-out transform ${
-                idx === currentSlide 
+                idx === activeSlide 
                   ? "bg-green-600 w-6" 
                   : "bg-gray-300 w-2"
               }`}
               aria-label={`Go to testimonial ${idx + 1}`}
-              onClick={() => setCurrentSlide(idx)}
+              onClick={() => goToSlide(idx)}
             />
           ))}
         </div>
       </div>
+      <style jsx global>{`
+        .testimonial-swiper-mobile {
+          padding: 20px 0 40px 0;
+        }
+        .testimonial-swiper-mobile .swiper-slide {
+          transition: transform 0.4s ease;
+        }
+        .testimonial-swiper-mobile .swiper-slide:not(.swiper-slide-active) {
+          transform: scale(0.92);
+          opacity: 0;
+        }
+        .testimonial-swiper-mobile .swiper-slide-active {
+          transform: scale(1);
+          opacity: 1;
+        }
+      `}</style>
     </section>
   )
 }
