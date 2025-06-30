@@ -26,6 +26,7 @@ function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,7 +71,7 @@ export default function Navbar() {
 
           {/* Mobile Hamburger Menu */}
           <div className="md:hidden flex items-center">
-            <Sheet>
+            <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-white">
                   <Menu className="h-7 w-7" />
@@ -94,7 +95,10 @@ export default function Navbar() {
                         key={link.label}
                         href={link.href}
                         className="text-white text-lg font-medium py-2 px-2 rounded-lg hover:bg-white/10 transition-all"
-                        onClick={e => handleNavClick(e, link.href)}
+                        onClick={e => {
+                          handleNavClick(e, link.href);
+                          setSidebarOpen(false);
+                        }}
                       >
                         {link.label}
                       </Link>

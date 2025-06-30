@@ -4,7 +4,7 @@ import { Twitter, Linkedin, Facebook } from "lucide-react"
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white py-16 ">
+    <footer id="contact" className="bg-black text-white py-16 ">
       <div className="max-w-[1280px] mx-auto px-[32px]">
         <div className="flex flex-col px-3 md:flex-row md:items-start md:justify-between gap-12">
           {/* Left: Logo, Description */}

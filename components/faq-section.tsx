@@ -131,7 +131,7 @@ export default function FAQSection() {
   }, [openFAQ])
 
   return (
-    <section className="bg-white w-full py-24">
+    <section id="faqs" className="bg-white w-full py-24">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row">
           {/* Title */}

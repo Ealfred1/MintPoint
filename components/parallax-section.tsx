@@ -36,7 +36,7 @@ function ParallaxSectionMobile() {
   }
 
   return (
-    <section className="block md:hidden w-full bg-white py-10 lg:min-h-[700px]">
+    <section id="how-it-works" className="block md:hidden w-full bg-white py-10 lg:min-h-[700px]">
       <div className="relative">
         <Swiper
           modules={[Pagination, EffectCoverflow, Autoplay]}
@@ -148,7 +148,7 @@ export default function ParallaxSection() {
   return (
     <>
       {/* Desktop version: hidden on mobile */}
-      <section ref={sectionRef} className="relative z-[60] w-full h-screen overflow-hidden bg-white hidden md:block">
+      <section id="how-it-works" ref={sectionRef} className="relative z-[60] w-full h-screen overflow-hidden bg-white hidden md:block">
         {parallaxImages.map((src, index) => (
           <div
             key={src}
