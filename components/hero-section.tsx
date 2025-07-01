@@ -188,58 +188,58 @@ export default function HeroSection() {
     <>
       {/* Desktop version: hidden on mobile */}
       <section className="relative min-h-screen flex items-end justify-start overflow-hidden hidden md:flex">
-        {/* Background Image Slider */}
-        <div className="absolute inset-0">
+      {/* Background Image Slider */}
+      <div className="absolute inset-0">
           {heroSlides.map((slide, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === currentIndex ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              <Image
-                src={slide.image || "/placeholder.svg"}
-                alt={`Hero background ${index + 1}`}
-                fill
-                className="object-cover bg-black"
-                priority={index === 0}
-              />
-              <div className="absolute inset-0 radgrad"></div>
-            </div>
-          ))}
-        </div>
-        {/* Content */}
-        <div className="relative z-10 w-full max-w-[700px] px-6 pb-12 md:pb-20 lg:pb-24 text-left">
           <div
-            className={`transition-all duration-1000 delay-300 ${
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === currentIndex ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <Image
+                src={slide.image || "/placeholder.svg"}
+              alt={`Hero background ${index + 1}`}
+              fill
+                className="object-cover bg-black"
+              priority={index === 0}
+            />
+            <div className="absolute inset-0 radgrad"></div>
+          </div>
+        ))}
+      </div>
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-[700px] px-6 pb-12 md:pb-20 lg:pb-24 text-left">
+        <div
+          className={`transition-all duration-1000 delay-300 ${
+            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+            <h1 className={`font-bold mb-6 leading-tight max-w-[769px] ${headingSize}`}>
+              {heroSlides[currentIndex].title}
+          </h1>
+          <p
+            className={`text-lg md:text-xl text-white mb-8 max-w-2xl transition-all duration-1000 delay-500 ${
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <h1 className={`font-bold mb-6 leading-tight max-w-[769px] ${headingSize}`}>
-              {heroSlides[currentIndex].title}
-            </h1>
-            <p
-              className={`text-lg md:text-xl text-white mb-8 max-w-2xl transition-all duration-1000 delay-500 ${
-                isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-            >
               {heroSlides[currentIndex].subtext}
-            </p>
-            <div
-              className={`flex flex-col sm:flex-row gap-4 transition-all duration-1000 delay-700 ${
-                isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-            >
-              <Button className="bg-white w-[137px] h-[40px] rounded-[26px] hover:bg-gray-100 px-8 py-3 border border-[#E1E4EA] text-sm text-[#525866] font-medium transition-all duration-300 hover:scale-105">
-                Find Nearby POS
-              </Button>
-              <Button className="bg-[#008B3A] w-[135px] h-[40px] rounded-[26px] text-white px-8 py-3 text-sm font-medium transition-all duration-300 hover:scale-105 hover:bg-[#008B3A]">
-                Join as an Agent
-              </Button>
-            </div>
+          </p>
+          <div
+            className={`flex flex-col sm:flex-row gap-4 transition-all duration-1000 delay-700 ${
+              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            <Button className="bg-white w-[137px] h-[40px] rounded-[26px] hover:bg-gray-100 px-8 py-3 border border-[#E1E4EA] text-sm text-[#525866] font-medium transition-all duration-300 hover:scale-105">
+              Find Nearby POS
+            </Button>
+            <Button className="bg-[#008B3A] w-[135px] h-[40px] rounded-[26px] text-white px-8 py-3 text-sm font-medium transition-all duration-300 hover:scale-105 hover:bg-[#008B3A]">
+              Join as an Agent
+            </Button>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
       {/* Mobile version: only on mobile */}
       <HeroSectionMobile />
     </>

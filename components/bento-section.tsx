@@ -221,28 +221,28 @@ export default function BentoSection() {
     <>
       {/* Desktop version: hidden on mobile */}
       <section ref={sectionRef} className="py-20 bg-white sticky top-[-35rem] z-25 text-black hidden md:block">
-        <div className="container mx-auto px-6">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">WHY MINTPOINT?</h2>
-            <p className="text-lg md:text-xl text-gray-600 max-w-2xl">
-              Mintpoint is not just a soft POS. It's your full financial assistant. Whether you're a roadside agent or a
-              retail business, we give you the tools to:
-            </p>
-          </div>
-          {/* Bento Grid */}
-          <div className="grid grid-cols-3 grid-rows-3 gap-6 max-w-6xl mx-auto h-[800px]">
-            {/* Row 1 */}
-            {renderBentoCard(bentoItems[0], 0, "col-span-1 row-span-1")}
-            {renderBentoCard(bentoItems[1], 1, "col-span-1 row-span-1")}
-            {renderBentoCard(bentoItems[2], 2, "col-span-1 row-span-2")}
-            {/* Row 2 */}
-            {renderBentoCard(bentoItems[3], 3, "col-span-1 row-span-2")}
-            {renderBentoCard(bentoItems[4], 4, "col-span-1 row-span-1")}
-            {/* Row 3 */}
-            {renderBentoCard(bentoItems[5], 5, "col-span-2 row-span-1")}
-          </div>
+      <div className="container mx-auto px-6">
+        <div className="mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">WHY MINTPOINT?</h2>
+          <p className="text-lg md:text-xl text-gray-600 max-w-2xl">
+            Mintpoint is not just a soft POS. It's your full financial assistant. Whether you're a roadside agent or a
+            retail business, we give you the tools to:
+          </p>
         </div>
-      </section>
+        {/* Bento Grid */}
+        <div className="grid grid-cols-3 grid-rows-3 gap-6 max-w-6xl mx-auto h-[800px]">
+          {/* Row 1 */}
+          {renderBentoCard(bentoItems[0], 0, "col-span-1 row-span-1")}
+          {renderBentoCard(bentoItems[1], 1, "col-span-1 row-span-1")}
+          {renderBentoCard(bentoItems[2], 2, "col-span-1 row-span-2")}
+          {/* Row 2 */}
+          {renderBentoCard(bentoItems[3], 3, "col-span-1 row-span-2")}
+          {renderBentoCard(bentoItems[4], 4, "col-span-1 row-span-1")}
+          {/* Row 3 */}
+          {renderBentoCard(bentoItems[5], 5, "col-span-2 row-span-1")}
+        </div>
+      </div>
+    </section>
       {/* Mobile version: only on mobile */}
       <BentoSectionMobile />
     </>

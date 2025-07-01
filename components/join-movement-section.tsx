@@ -89,75 +89,75 @@ export default function JoinMovementSection() {
   return (
     <>
       {/* Desktop version: hidden on mobile */}
-      <section 
-        ref={sectionRef} 
+    <section 
+      ref={sectionRef} 
         className="relative py-20 bg-[#008B3A] h-[459px] overflow-hidden hidden md:block"
-      >
-        {/* Background rough image with 10% opacity */}
-        <div className="absolute inset-0 opacity-10 z-0">
-          <Image
-            src="/images/rough.png"
-            alt="Background texture"
-            fill
-            className="object-cover"
-          />
-        </div>
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            {/* Left Content */}
-            <div className="text-white pt-8">
-              <h2 className="text-[37px] font-bold mb-1 leading-tight">JOIN THE MOVEMENT</h2>
-              <p className="text-lg mb-8 leading-relaxed">
-                Thousands are switching to smarter transactions with<br /> Mintpoint. Why not you?
-              </p>
-              {/* User Avatars */}
-              <div className="flex items-center mb-8">
-                <div className="flex -space-x-5">
-                  {avatarImages.map((src, i) => (
-                    <div
-                      key={i}
-                      className="w-12 h-12 rounded-full flex items-center justify-center overflow-hidden"
-                    >
-                      <Image
-                        src={src}
-                        alt={`User avatar ${i + 1}`}
-                        width={48}
-                        height={48}
-                        className="object-cover w-full h-full"
-                        draggable="false"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-              {/* App Store Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <img src="/images/appstore-btn.svg" alt="Download on the App Store" className="transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer" draggable="false" />
-                <img src="/images/playstore-btn.svg" alt="Download on Play Store" className="transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer" draggable="false" />
+    >
+      {/* Background rough image with 10% opacity */}
+      <div className="absolute inset-0 opacity-10 z-0">
+        <Image
+          src="/images/rough.png"
+          alt="Background texture"
+          fill
+          className="object-cover"
+        />
+      </div>
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          {/* Left Content */}
+          <div className="text-white pt-8">
+            <h2 className="text-[37px] font-bold mb-1 leading-tight">JOIN THE MOVEMENT</h2>
+            <p className="text-lg mb-8 leading-relaxed">
+              Thousands are switching to smarter transactions with<br /> Mintpoint. Why not you?
+            </p>
+            {/* User Avatars */}
+            <div className="flex items-center mb-8">
+              <div className="flex -space-x-5">
+                {avatarImages.map((src, i) => (
+                  <div
+                    key={i}
+                    className="w-12 h-12 rounded-full flex items-center justify-center overflow-hidden"
+                  >
+                    <Image
+                      src={src}
+                      alt={`User avatar ${i + 1}`}
+                      width={48}
+                      height={48}
+                      className="object-cover w-full h-full"
+                      draggable="false"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
-            {/* Right Image - Enhanced positioning and sizing */}
-            <div className="relative flex justify-end items-center min-h-[600px] lg:min-h-[800px]">
-              <div
-                ref={imageRef}
-                className="relative transform transition-transform duration-1000 flex items-center justify-center"
+            {/* App Store Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <img src="/images/appstore-btn.svg" alt="Download on the App Store" className="transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer" draggable="false" />
+                <img src="/images/playstore-btn.svg" alt="Download on Play Store" className="transition-all hover:brightness-200 hover:scale-[1.1] cursor-pointer" draggable="false" />
+            </div>
+          </div>
+          {/* Right Image - Enhanced positioning and sizing */}
+          <div className="relative flex justify-end items-center min-h-[600px] lg:min-h-[800px]">
+            <div
+              ref={imageRef}
+              className="relative transform transition-transform duration-1000 flex items-center justify-center"
                 style={{}}
-              >
-                <div className="relative -translate-y-[230px] w-[400px] h-[400px] lg:w-[600px] lg:h-[600px] xl:w-[800px] xl:h-[800px]">
-                  <Image
-                    src="/images/join-d-movement.png"
-                    alt="Join the Movement"
-                    fill
-                    className="object-contain absolute top-0 -rotate-[120deg]"
-                    sizes="(max-width: 768px) 400px, (max-width: 1024px) 600px, 800px"
-                    draggable="false"
-                  />
-                </div>
+            >
+              <div className="relative -translate-y-[230px] w-[400px] h-[400px] lg:w-[600px] lg:h-[600px] xl:w-[800px] xl:h-[800px]">
+                <Image
+                  src="/images/join-d-movement.png"
+                  alt="Join the Movement"
+                  fill
+                  className="object-contain absolute top-0 -rotate-[120deg]"
+                  sizes="(max-width: 768px) 400px, (max-width: 1024px) 600px, 800px"
+                  draggable="false"
+                />
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
       {/* Mobile version: only on mobile */}
       <JoinMovementMobile />
     </>

@@ -27,14 +27,14 @@ function BackedBySectionMobile() {
               key={index}
               className="flex flex-col items-center justify-center"
             >
-              <Image
-                src={company.image}
-                alt={company.name}
-                width={120}
-                height={60}
+                <Image
+                  src={company.image}
+                  alt={company.name}
+                  width={120}
+                  height={60}
                 className="object-contain h-8 w-auto"
-              />
-            </div>
+                />
+              </div>
           ))}
         </div>
       </div>
