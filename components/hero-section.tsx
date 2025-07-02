@@ -12,9 +12,8 @@ const heroSlides = [
     image: "/mintpoint-lady.jpg",
     title: (
       <>
-        WE DON'T JUST GIVE <span className="text-[#008B3A]">CASH.</span>
-        <br />
-        WE GIVE <span className="text-[#008B3A]">CLEAN MONEY!</span>
+        WE DON'T JUST GIVE CASH
+        WE GIVE CLEAN<span className="text-[#008B3A]"> MONEY!</span>
       </>
     ),
     subtext:
@@ -24,9 +23,8 @@ const heroSlides = [
     image: "/mintpoint-card.jpg",
     title: (
       <>
-        TURN YOUR <span className="text-[#008B3A]">SMARTPHONE</span>
-        <br />
-        INTO A <span className="text-[#008B3A]">POS TERMINAL</span>
+        TURN YOUR SMARTPHONE
+        INTO A <span className="text-[#008B3A]">POS</span> TERMINAL
       </>
     ),
     subtext:
