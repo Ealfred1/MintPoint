@@ -12,9 +12,9 @@ const heroSlides = [
     image: "/mintpoint-lady.jpg",
     title: (
       <>
-        WE DON'T JUST <span className="marker-span marker-1">GIVE CASH.</span>
+        WE DON'T JUST GIVE <span className="text-[#008B3A]">CASH.</span>
         <br />
-        WE GIVE <span className="marker-span marker-2">CLEAN MONEY!</span>
+        WE GIVE <span className="text-[#008B3A]">CLEAN MONEY!</span>
       </>
     ),
     subtext:
@@ -24,9 +24,9 @@ const heroSlides = [
     image: "/mintpoint-card.jpg",
     title: (
       <>
-        TURN YOUR <span className="marker-span marker-1">SMARTPHONE</span>
+        TURN YOUR <span className="text-[#008B3A]">SMARTPHONE</span>
         <br />
-        INTO A <span className="marker-span marker-2">POS TERMINAL</span>
+        INTO A <span className="text-[#008B3A]">POS TERMINAL</span>
       </>
     ),
     subtext:
@@ -36,7 +36,7 @@ const heroSlides = [
     image: "/mintpoint-bank.jpg",
     title: (
       <>
-        WHERE SIMPLICITY MEETS <span className="marker-span marker-2">INNOVATION</span>
+        WHERE SIMPLICITY MEETS <span className="text-[#008B3A]">INNOVATION</span>
       </>
     ),
     subtext:
@@ -63,37 +63,37 @@ function useWindowHeightReady() {
   return { windowHeight, ready }
 }
 
-function SlideProgressIndicator({ currentIndex, progress, count = 3 }: { currentIndex: number; progress: number; count?: number }) {
-  return (
-    <div className="absolute left-0 right-0 bottom-0 z-20 w-full flex items-center justify-center px-0 pb-4 pointer-events-none">
-      <div className="w-full max-w-[700px] md:max-w-[700px] flex gap-2 mx-auto">
-        {Array.from({ length: count }).map((_, i) => (
-          <div
-            key={i}
-            className="flex-1 h-2 rounded-full bg-white/30 overflow-hidden relative"
-            style={{ minWidth: 0 }}
-          >
-            {/* Progress fill for current */}
-            {i === currentIndex ? (
-              <div
-                className="absolute left-0 top-0 h-full bg-white transition-all"
-                style={{
-                  width: `${progress * 100}%`,
-                  borderRadius: '9999px',
-                  transition: 'width 0.2s linear',
-                }}
-              />
-            ) : null}
-            {/* Solid fill for completed */}
-            {i < currentIndex ? (
-              <div className="absolute left-0 top-0 h-full w-full bg-white rounded-full" />
-            ) : null}
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
+// function SlideProgressIndicator({ currentIndex, progress, count = 3 }: { currentIndex: number; progress: number; count?: number }) {
+//   return (
+//     <div className="absolute left-0 right-0 bottom-0 z-20 w-full flex items-center justify-center px-0 pb-4 pointer-events-none">
+//       <div className="w-full max-w-[700px] md:max-w-[700px] flex gap-2 mx-auto">
+//         {Array.from({ length: count }).map((_, i) => (
+//           <div
+//             key={i}
+//             className="flex-1 h-2 rounded-full bg-white/30 overflow-hidden relative"
+//             style={{ minWidth: 0 }}
+//           >
+//             {/* Progress fill for current */}
+//             {i === currentIndex ? (
+//               <div
+//                 className="absolute left-0 top-0 h-full bg-white transition-all"
+//                 style={{
+//                   width: `${progress * 100}%`,
+//                   borderRadius: '9999px',
+//                   transition: 'width 0.2s linear',
+//                 }}
+//               />
+//             ) : null}
+//             {/* Solid fill for completed */}
+//             {i < currentIndex ? (
+//               <div className="absolute left-0 top-0 h-full w-full bg-white rounded-full" />
+//             ) : null}
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   )
+// }
 
 function HeroSectionMobile() {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -196,7 +196,7 @@ function HeroSectionMobile() {
         </div>
       </div>
       {/* Slide Progress Indicator */}
-      <SlideProgressIndicator currentIndex={currentIndex} progress={progress} count={heroSlides.length} />
+      {/* <SlideProgressIndicator currentIndex={currentIndex} progress={progress} count={heroSlides.length} /> */}
     </section>
   )
 }
@@ -344,7 +344,7 @@ export default function HeroSection() {
         </div>
       </div>
       {/* Slide Progress Indicator */}
-      <SlideProgressIndicator currentIndex={currentIndex} progress={progress} count={heroSlides.length} />
+      {/* <SlideProgressIndicator currentIndex={currentIndex} progress={progress} count={heroSlides.length} /> */}
     </section>
       {/* Mobile version: only on mobile */}
       <HeroSectionMobile />
