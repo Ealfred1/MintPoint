@@ -4,16 +4,17 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 
+const highlightClass =
+  "relative inline-block px-1 before:absolute before:inset-0 before:-z-10 before:bg-[url('data:image/svg+xml,%3Csvg%20width=\'388\'%20height=\'64\'%20fill=\'none\'%20xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath%20d=\'M386%2024c-64%203-211%208-341%200%2061%206%20174%2014%20300%2014-37%202-148%204-343-6\'%20stroke=\'%23008B3A\'%20stroke-width=\'48\'/%3E%3C/svg%3E')] before:bg-no-repeat before:bg-cover before:rounded before:opacity-80"
+
 const heroSlides = [
   {
     image: "/mintpoint-lady.jpg",
     title: (
       <>
-        WE DON'T JUST GIVE
+        WE DON'T JUST <span className="marker-span marker-1">GIVE CASH.</span>
         <br />
-        <span className="text-green-400">CASH.</span> WE GIVE CLEAN
-        <br />
-        MONEY!
+        WE GIVE <span className="marker-span marker-2">CLEAN MONEY!</span>
       </>
     ),
     subtext:
@@ -23,9 +24,9 @@ const heroSlides = [
     image: "/mintpoint-card.jpg",
     title: (
       <>
-        TURN YOUR SMARTPHONE
+        TURN YOUR <span className="marker-span marker-1">SMARTPHONE</span>
         <br />
-        INTO A POS TERMINAL
+        INTO A <span className="marker-span marker-2">POS TERMINAL</span>
       </>
     ),
     subtext:
@@ -35,9 +36,7 @@ const heroSlides = [
     image: "/mintpoint-bank.jpg",
     title: (
       <>
-        WELCOME TO MINTPOINT:
-        <br />
-        WHERE SIMPLICITY MEETS INNOVATION
+        WHERE SIMPLICITY MEETS <span className="marker-span marker-2">INNOVATION</span>
       </>
     ),
     subtext:
@@ -64,17 +63,83 @@ function useWindowHeightReady() {
   return { windowHeight, ready }
 }
 
+function SlideProgressIndicator({ currentIndex, progress, count = 3 }: { currentIndex: number; progress: number; count?: number }) {
+  return (
+    <div className="absolute left-0 right-0 bottom-0 z-20 w-full flex items-center justify-center px-0 pb-4 pointer-events-none">
+      <div className="w-full max-w-[700px] md:max-w-[700px] flex gap-2 mx-auto">
+        {Array.from({ length: count }).map((_, i) => (
+          <div
+            key={i}
+            className="flex-1 h-2 rounded-full bg-white/30 overflow-hidden relative"
+            style={{ minWidth: 0 }}
+          >
+            {/* Progress fill for current */}
+            {i === currentIndex ? (
+              <div
+                className="absolute left-0 top-0 h-full bg-white transition-all"
+                style={{
+                  width: `${progress * 100}%`,
+                  borderRadius: '9999px',
+                  transition: 'width 0.2s linear',
+                }}
+              />
+            ) : null}
+            {/* Solid fill for completed */}
+            {i < currentIndex ? (
+              <div className="absolute left-0 top-0 h-full w-full bg-white rounded-full" />
+            ) : null}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function HeroSectionMobile() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     setIsLoaded(true)
+    let start = Date.now()
+    let raf: number
+    let lastIndex = currentIndex
+    function animate() {
+      const elapsed = Date.now() - start
+      let prog = Math.min(elapsed / 5000, 1)
+      setProgress(prog)
+      if (prog < 1) {
+        raf = requestAnimationFrame(animate)
+      }
+    }
+    animate()
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % heroSlides.length)
+      start = Date.now()
+      setProgress(0)
     }, 5000)
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+      cancelAnimationFrame(raf)
+    }
   }, [])
+
+  useEffect(() => {
+    setProgress(0)
+    let start = Date.now()
+    let raf: number
+    function animate() {
+      const elapsed = Date.now() - start
+      let prog = Math.min(elapsed / 5000, 1)
+      setProgress(prog)
+      if (prog < 1) {
+        raf = requestAnimationFrame(animate)
+      }
+    }
+    animate()
+    return () => cancelAnimationFrame(raf)
+  }, [currentIndex])
 
   return (
     <section className="block md:hidden relative min-h-screen flex items-end justify-start overflow-hidden">
@@ -94,6 +159,8 @@ function HeroSectionMobile() {
               className="object-cover bg-black"
             />
             <div className="absolute inset-0 radgrad"></div>
+            {/* Overlay for better text readability */}
+            <div className="absolute inset-0 bg-black/50 pointer-events-none"></div>
           </div>
         ))}
       </div>
@@ -128,6 +195,8 @@ function HeroSectionMobile() {
           </div>
         </div>
       </div>
+      {/* Slide Progress Indicator */}
+      <SlideProgressIndicator currentIndex={currentIndex} progress={progress} count={heroSlides.length} />
     </section>
   )
 }
@@ -136,17 +205,48 @@ export default function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
   const { windowHeight, ready } = useWindowHeightReady()
+  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     if (!ready) return
     setIsLoaded(true)
-
+    let start = Date.now()
+    let raf: number
+    function animate() {
+      const elapsed = Date.now() - start
+      let prog = Math.min(elapsed / 5000, 1)
+      setProgress(prog)
+      if (prog < 1) {
+        raf = requestAnimationFrame(animate)
+      }
+    }
+    animate()
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % heroSlides.length)
+      start = Date.now()
+      setProgress(0)
     }, 5000)
-
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+      cancelAnimationFrame(raf)
+    }
   }, [ready])
+
+  useEffect(() => {
+    setProgress(0)
+    let start = Date.now()
+    let raf: number
+    function animate() {
+      const elapsed = Date.now() - start
+      let prog = Math.min(elapsed / 5000, 1)
+      setProgress(prog)
+      if (prog < 1) {
+        raf = requestAnimationFrame(animate)
+      }
+    }
+    animate()
+    return () => cancelAnimationFrame(raf)
+  }, [currentIndex])
 
   // Don't render any content until we know the window height (client-side)
   if (!ready || windowHeight === null) {
@@ -165,10 +265,12 @@ export default function HeroSection() {
                 src={slide.image || "/placeholder.svg"}
                 alt={`Hero background ${index + 1}`}
                 fill
-                className="object-contain bg-black"
+                className="object-cover bg-black"
                 priority={index === 0}
               />
               <div className="absolute inset-0 radgrad"></div>
+              {/* Overlay for better text readability */}
+              <div className="absolute inset-0 bg-black/50 pointer-events-none"></div>
             </div>
           ))}
         </div>
@@ -205,6 +307,8 @@ export default function HeroSection() {
               priority={index === 0}
             />
             <div className="absolute inset-0 radgrad"></div>
+            {/* Overlay for better text readability */}
+            <div className="absolute inset-0 bg-black/50 pointer-events-none"></div>
           </div>
         ))}
       </div>
@@ -239,6 +343,8 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
+      {/* Slide Progress Indicator */}
+      <SlideProgressIndicator currentIndex={currentIndex} progress={progress} count={heroSlides.length} />
     </section>
       {/* Mobile version: only on mobile */}
       <HeroSectionMobile />

@@ -78,7 +78,7 @@ export default function Navbar() {
                   <span className="sr-only">Open menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="bg-black/60 backdrop-blur-lg border-none shadow-2xl p-0">
+              <SheetContent side="right" className="bg-black/30 backdrop-blur-lg border-none shadow-2xl p-0">
                 <div className="flex flex-col h-full w-full py-8 px-6 gap-8">
                   <div className="flex items-center justify-between">
                     <img src="/images/mintpoint.svg" alt="Mintpoint Logo" className="h-8 w-auto" draggable="false" />

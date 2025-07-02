@@ -82,7 +82,7 @@ function ParallaxSectionMobile() {
               aria-label={`Go to slide ${idx + 1}`}
             />
           ))}
-        </div>
+            </div>
       </div>
       <style jsx global>{`
         .parallax-swiper-mobile {
