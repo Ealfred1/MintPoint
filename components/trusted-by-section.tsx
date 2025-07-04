@@ -6,6 +6,8 @@ const logos = [
   { name: "OPay", image: "/images/opay.png" },
   { name: "Moniepoint", image: "/images/moniepoint.png" },
   { name: "Paystack", image: "/images/paystack_logo.svg.svg" },
+  // { name: "Kuda", image: "/images/kuda.png"  },
+  { name: "Palmpay", image: "/images/PalmPay-logo-coloured.png" }
 ]
 
 function TrustedBySectionMobile() {
@@ -61,7 +63,7 @@ function TrustedBySectionMobile() {
               key={index}
               src={logo.image}
               alt={logo.name}
-              className="h-8 w-auto object-contain"
+              className="h-8 w-auto object-cover"
               draggable="false"
             />
           ))}
