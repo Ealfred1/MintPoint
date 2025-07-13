@@ -9,32 +9,31 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Mintpoint - AI-powered POS',
+  title: 'Mintpoint | Tap. Pay. Smarter.',
   description:
-    'Welcome to Mintpoint, the AI-powered POS. Register today and start using your phone to receive fast card payments with a tap, USSD, and virtual accounts, all in one platform.',
+    'Tap. Pay. Smarter. This is exactly what Mintpoint does—making payments seamless, fast, and smarter for everyone.',
   generator: 'Mintpoint',
   keywords: [
+    'Tap',
+    'Pay',
+    'Smarter',
+    'Tap to Pay',
     'Mintpoint',
+    'Smarter Payments',
+    'Seamless Payments',
+    'Fast Payments',
+    'Contactless',
     'POS',
     'AI POS',
-    'Card Payments',
-    'USSD Payments',
-    'Virtual Accounts',
     'Mobile POS',
-    'Contactless Payments',
-    'Payment Platform',
-    'Fintech',
-    'Tap to Pay',
-    'Business Payments',
-    'Digital Payments',
-    'Nigeria POS',
-    'Africa Fintech',
+    'Payment',
+    'Smart POS',
   ],
   authors: [{ name: 'Mintpoint', url: 'https://mintpoint.com' }],
   openGraph: {
-    title: 'Mintpoint - AI-powered POS',
+    title: 'Tap. Pay. Smarter. | Mintpoint',
     description:
-      'Welcome to Mintpoint, the AI-powered POS. Register today and start using your phone to receive fast card payments with a tap, USSD, and virtual accounts, all in one platform.',
+      'Tap. Pay. Smarter. This is exactly what Mintpoint does—making payments seamless, fast, and smarter for everyone.',
     url: 'https://mintpoint.com',
     siteName: 'Mintpoint',
     images: [
@@ -42,7 +41,7 @@ export const metadata: Metadata = {
         url: '/images/mintpoint.svg',
         width: 1200,
         height: 630,
-        alt: 'Mintpoint - AI-powered POS',
+        alt: 'Tap. Pay. Smarter. | Mintpoint',
       },
     ],
     locale: 'en_US',
@@ -50,9 +49,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Mintpoint - AI-powered POS',
+    title: 'Tap. Pay. Smarter. | Mintpoint',
     description:
-      'Welcome to Mintpoint, the AI-powered POS. Register today and start using your phone to receive fast card payments with a tap, USSD, and virtual accounts, all in one platform.',
+      'Tap. Pay. Smarter. This is exactly what Mintpoint does—making payments seamless, fast, and smarter for everyone.',
     images: ['/images/mintpoint.svg'],
     site: '@mintpointapp',
     creator: '@mintpointapp',
