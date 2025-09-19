@@ -149,6 +149,25 @@ html {
   transform-origin: center center;
 }
 
+/* Desktop Parallax Fixed Section */
+@media (min-width: 768px) {
+  .parallax-desktop-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    z-index: 60;
+  }
+  
+  .parallax-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.2s ease-out;
+  }
+}
+
 /* Prevent body scroll when parallax is active */
 body.parallax-active {
   overflow: hidden;
@@ -250,6 +269,56 @@ body.parallax-active {
   .mintpoint-for-content {
     width: 100% !important;
     right: auto !important;
+  }
+
+  /* Mobile performance optimizations */
+  * {
+    -webkit-overflow-scrolling: touch;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  /* Reduce motion for better performance */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Optimize video performance */
+  video {
+    will-change: auto;
+    transform: translateZ(0);
+  }
+
+  /* Smooth scrolling optimizations */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+  }
+
+  /* Swiper mobile optimizations */
+  .parallax-swiper-mobile {
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+
+  .parallax-swiper-mobile .swiper-slide {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Reduce motion for better performance */
+  .parallax-swiper-mobile .swiper-slide {
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
   }
 }
 

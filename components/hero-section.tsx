@@ -99,48 +99,19 @@ function HeroSectionMobile() {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
+    // Immediate loading for better mobile performance
     setIsLoaded(true)
-    let start = Date.now()
-    let raf: number
-    let lastIndex = currentIndex
-    function animate() {
-      const elapsed = Date.now() - start
-      let prog = Math.min(elapsed / 5000, 1)
-      setProgress(prog)
-      if (prog < 1) {
-        raf = requestAnimationFrame(animate)
-      }
-    }
-    animate()
+    
+    // Simplified progress tracking without complex animations
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % heroSlides.length)
-      start = Date.now()
-      setProgress(0)
     }, 5000)
-    return () => {
-      clearInterval(interval)
-      cancelAnimationFrame(raf)
-    }
+    
+    return () => clearInterval(interval)
   }, [])
 
-  useEffect(() => {
-    setProgress(0)
-    let start = Date.now()
-    let raf: number
-    function animate() {
-      const elapsed = Date.now() - start
-      let prog = Math.min(elapsed / 5000, 1)
-      setProgress(prog)
-      if (prog < 1) {
-        raf = requestAnimationFrame(animate)
-      }
-    }
-    animate()
-    return () => cancelAnimationFrame(raf)
-  }, [currentIndex])
-
   return (
-    <section className="block md:hidden relative min-h-screen flex items-end justify-start overflow-hidden">
+    <section className="md:hidden relative min-h-screen flex items-end justify-start overflow-hidden">
       {/* Background Image Slider */}
       <div className="absolute inset-0">
         {heroSlides.map((slide, index) => (
@@ -164,26 +135,14 @@ function HeroSectionMobile() {
       </div>
       {/* Content */}
       <div className="relative z-10 w-full px-4 pb-10 text-left">
-        <div
-          className={`transition-all duration-1000 delay-300 ${
-            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
+        <div className="opacity-100 translate-y-0">
           <h1 className="font-bold mb-4 leading-tight text-3xl sm:text-4xl max-w-[340px]">
             {heroSlides[currentIndex].title}
           </h1>
-          <p
-            className={`text-base text-white mb-6 max-w-xs transition-all duration-1000 delay-500 ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
+          <p className="text-base text-white mb-6 max-w-xs">
             {heroSlides[currentIndex].subtext}
           </p>
-          <div
-            className={`flex flex-col gap-3 transition-all duration-1000 delay-700 ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
+          <div className="flex flex-col gap-3">
             <Button className="bg-white w-full h-[40px] rounded-[26px] hover:bg-gray-100 border border-[#E1E4EA] text-sm text-[#525866] font-medium transition-all duration-300 hover:scale-105">
               Find Nearby POS
             </Button>
@@ -287,7 +246,7 @@ export default function HeroSection() {
   return (
     <>
       {/* Desktop version: hidden on mobile */}
-      <section className="relative min-h-screen flex items-end justify-start overflow-hidden hidden md:flex">
+      <section className="relative min-h-screen items-end justify-start overflow-hidden hidden md:flex">
       {/* Background Image Slider */}
       <div className="absolute inset-0">
           {heroSlides.map((slide, index) => (
@@ -312,26 +271,14 @@ export default function HeroSection() {
       </div>
       {/* Content */}
       <div className="relative z-10 w-full max-w-[700px] px-6 pb-12 md:pb-20 lg:pb-24 text-left">
-        <div
-          className={`transition-all duration-1000 delay-300 ${
-            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
+        <div className="opacity-100 translate-y-0">
             <h1 className={`font-bold mb-6 leading-tight max-w-[769px] ${headingSize}`}>
               {heroSlides[currentIndex].title}
           </h1>
-          <p
-            className={`text-lg md:text-xl text-white mb-8 max-w-2xl transition-all duration-1000 delay-500 ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
-              {heroSlides[currentIndex].subtext}
+          <p className="text-lg md:text-xl text-white mb-8 max-w-2xl">
+            {heroSlides[currentIndex].subtext}
           </p>
-          <div
-            className={`flex flex-col sm:flex-row gap-4 transition-all duration-1000 delay-700 ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
+          <div className="flex flex-col sm:flex-row gap-4">
             <Button className="bg-white w-[137px] h-[40px] rounded-[26px] hover:bg-gray-100 px-8 py-3 border border-[#E1E4EA] text-sm text-[#525866] font-medium transition-all duration-300 hover:scale-105">
               Find Nearby POS
             </Button>

@@ -39,23 +39,26 @@ function ParallaxSectionMobile() {
     <section id="how-it-works" className="block md:hidden w-full bg-white py-10 lg:min-h-[700px]">
       <div className="relative">
         <Swiper
-          modules={[Pagination, EffectCoverflow, Autoplay]}
-          effect="coverflow"
+          modules={[Pagination, Autoplay]}
           grabCursor={true}
           centeredSlides={true}
           slidesPerView="auto"
-          coverflowEffect={{
-            rotate: 0,
-            stretch: 0,
-            depth: 100,
-            modifier: 2,
-            slideShadows: false,
-          }}
+          spaceBetween={20}
           autoplay={{
             delay: 4000,
             disableOnInteraction: false,
           }}
           loop={true}
+          speed={300}
+          touchRatio={1}
+          touchAngle={45}
+          threshold={5}
+          longSwipesRatio={0.5}
+          longSwipesMs={300}
+          followFinger={true}
+          allowTouchMove={true}
+          resistance={true}
+          resistanceRatio={0.85}
           onSwiper={(swiper) => {
             swiperRef.current = swiper
           }}
@@ -65,7 +68,15 @@ function ParallaxSectionMobile() {
           {parallaxImages.map((src, index) => (
             <SwiperSlide key={index} className="!w-[300px]">
               <div className="relative h-[350px] rounded-2xl overflow-hidden mx-2 shadow-lg">
-                <Image src={src} alt={`Slide ${index + 1}`} fill className="object-cover" />
+                <Image 
+                  src={src} 
+                  alt={`Slide ${index + 1}`} 
+                  fill 
+                  className="object-cover"
+                  priority={index < 2}
+                  loading={index < 2 ? "eager" : "lazy"}
+                  sizes="300px"
+                />
               </div>
             </SwiperSlide>
           ))}
@@ -87,16 +98,26 @@ function ParallaxSectionMobile() {
       <style jsx global>{`
         .parallax-swiper-mobile {
           padding: 20px 0 40px 0;
+          overflow: visible;
         }
         .parallax-swiper-mobile .swiper-slide {
-          transition: transform 0.4s ease;
+          transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+          will-change: transform, opacity;
+          transform: translateZ(0);
         }
         .parallax-swiper-mobile .swiper-slide:not(.swiper-slide-active) {
-          transform: scale(0.85);
+          transform: scale(0.9) translateZ(0);
+          opacity: 0.7;
         }
         .parallax-swiper-mobile .swiper-slide-active {
-          transform: scale(1);
+          transform: scale(1) translateZ(0);
           opacity: 1;
+        }
+        .parallax-swiper-mobile .swiper-wrapper {
+          transform: translateZ(0);
+        }
+        .parallax-swiper-mobile .swiper-container {
+          overflow: visible;
         }
       `}</style>
     </section>
@@ -106,41 +127,56 @@ function ParallaxSectionMobile() {
 export default function ParallaxSection() {
   const sectionRef = useRef<HTMLDivElement | null>(null)
   const slidesRef = useRef<HTMLDivElement[]>([])
+  const currentImageIndex = useRef(0)
 
   useEffect(() => {
+    // Only run GSAP ScrollTrigger on desktop
+    if (window.innerWidth < 768) return
+
     const section = sectionRef.current
     const slides = slidesRef.current
     if (!section || slides.length === 0) return
 
-    // Set initial positions
-    gsap.set(slides, { yPercent: 100 })
-    gsap.set(slides[0], { yPercent: 0 })
+    // Set initial positions - all images stacked, only first visible
+    gsap.set(slides, { 
+      yPercent: 0, 
+      opacity: 0,
+      zIndex: 1
+    })
+    gsap.set(slides[0], { 
+      opacity: 1,
+      zIndex: 2
+    })
 
     // Remove all previous triggers
     ScrollTrigger.getAll().forEach(trigger => trigger.kill())
 
-    // Pin the section for (images.length - 1) * 100vh
+    // Create fixed section with image transitions - only when you reach this section
     ScrollTrigger.create({
       trigger: section,
-      start: "top top",
-      end: `+=${(parallaxImages.length - 1) * window.innerHeight}`,
+      start: "top top", // Only starts when section reaches top of viewport
+      end: `+=${parallaxImages.length * window.innerHeight}`, // Each image gets full viewport height
       pin: true,
-      scrub: 0.5,
-      anticipatePin: 1,
+      pinSpacing: false, // Remove spacing to truly lock the section
       onUpdate: self => {
-        // Calculate which image should be visible
         const progress = self.progress
-        const total = parallaxImages.length - 1
-        const index = Math.round(progress * total)
-        slides.forEach((slide, i) => {
-          if (i < index) {
-            gsap.set(slide, { yPercent: -100 })
-          } else if (i === index) {
-            gsap.set(slide, { yPercent: 0 })
-          } else {
-            gsap.set(slide, { yPercent: 100 })
-          }
-        })
+        const totalImages = parallaxImages.length
+        const imageIndex = Math.floor(progress * totalImages)
+        const clampedIndex = Math.min(imageIndex, totalImages - 1)
+        
+        // Always update the image based on scroll progress (no transition lock)
+        if (clampedIndex !== currentImageIndex.current) {
+          currentImageIndex.current = clampedIndex
+          
+          // Hide all images first
+          slides.forEach((slide, i) => {
+            if (i === clampedIndex) {
+              gsap.set(slide, { opacity: 1, zIndex: 2 })
+            } else {
+              gsap.set(slide, { opacity: 0, zIndex: 1 })
+            }
+          })
+        }
       },
     })
   }, [])
@@ -148,13 +184,13 @@ export default function ParallaxSection() {
   return (
     <>
       {/* Desktop version: hidden on mobile */}
-      <section id="how-it-works" ref={sectionRef} className="relative z-[60] w-full h-screen overflow-hidden bg-white hidden md:block">
+      <section id="how-it-works" ref={sectionRef} className="relative z-[60] w-full h-screen overflow-hidden bg-white hidden md:block parallax-desktop-container">
         {parallaxImages.map((src, index) => (
           <div
             key={src}
             ref={el => { if (el) slidesRef.current[index] = el }}
-            className="absolute inset-0 w-full h-full transition-all duration-700"
-            style={{ zIndex: parallaxImages.length - index }}
+            className="parallax-slide"
+            style={{ zIndex: 1 }}
           >
             <img
               src={src}

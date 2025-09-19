@@ -165,7 +165,7 @@ function CustomVideoPlayer({
     objectFit: "cover" as const,
     borderRadius: rounded,
     background: "black",
-    transition: "transform 0.5s, border-radius 0.5s",
+    transition: "transform 0.3s, border-radius 0.3s", // Reduced transition time
     transform: isOverlayVisible ? "scale(0.97)" : "scale(1)",
     pointerEvents: "auto" as const,
     userSelect: "none" as const,
@@ -189,6 +189,7 @@ function CustomVideoPlayer({
         onPause={handlePause}
         tabIndex={-1}
         draggable={false}
+        preload="none"
       />
       {/* Overlay Play Button */}
       {isOverlayVisible && (
