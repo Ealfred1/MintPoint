@@ -1,0 +1,86 @@
+{
+  "name": "Mintpoint - AI-Powered POS Terminal",
+  "short_name": "Mintpoint",
+  "description": "Transform your smartphone into a powerful POS terminal. Accept contactless payments, USSD, and virtual accounts with zero hardware costs.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#00C853",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["business", "finance", "productivity"],
+  "icons": [
+    {
+      "src": "/images/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon-1024x1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/screenshot-mobile-1.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/images/screenshot-desktop-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Download App",
+      "short_name": "Download",
+      "description": "Download Mintpoint mobile app",
+      "url": "/download",
+      "icons": [
+        {
+          "src": "/images/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "How It Works",
+      "short_name": "Guide",
+      "description": "Learn how Mintpoint works",
+      "url": "/#how-it-works",
+      "icons": [
+        {
+          "src": "/images/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.mintpoint.app",
+      "id": "com.mintpoint.app"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/app/mintpoint/id123456789"
+    }
+  ],
+  "prefer_related_applications": true
+}
