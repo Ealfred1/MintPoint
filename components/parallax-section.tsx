@@ -106,11 +106,11 @@ function ParallaxSectionMobile() {
           transform: translateZ(0);
         }
         .parallax-swiper-mobile .swiper-slide:not(.swiper-slide-active) {
-          transform: scale(0.9) translateZ(0);
-          opacity: 0.7;
+          transform: scale(0.75) translateZ(0);
+          opacity: 0.6;
         }
         .parallax-swiper-mobile .swiper-slide-active {
-          transform: scale(1) translateZ(0);
+          transform: scale(1.1) translateZ(0);
           opacity: 1;
         }
         .parallax-swiper-mobile .swiper-wrapper {
@@ -231,11 +231,11 @@ function ParallaxSectionDesktop() {
           transform: translateZ(0);
         }
         .parallax-swiper-desktop .swiper-slide:not(.swiper-slide-active) {
-          transform: scale(0.9) translateZ(0);
-          opacity: 0.7;
+          transform: scale(0.75) translateZ(0);
+          opacity: 0.6;
         }
         .parallax-swiper-desktop .swiper-slide-active {
-          transform: scale(1) translateZ(0);
+          transform: scale(1.1) translateZ(0);
           opacity: 1;
         }
         .parallax-swiper-desktop .swiper-wrapper {
