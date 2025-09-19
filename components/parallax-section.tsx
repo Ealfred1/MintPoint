@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Image from "next/image"
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react"
-import { Pagination, EffectCoverflow, Autoplay } from "swiper/modules"
+import { Pagination, EffectCoverflow, Autoplay, Navigation } from "swiper/modules"
 import type { Swiper as SwiperType } from "swiper"
 // Import Swiper styles
 import "swiper/css"
@@ -124,84 +124,137 @@ function ParallaxSectionMobile() {
   )
 }
 
-export default function ParallaxSection() {
-  const sectionRef = useRef<HTMLDivElement | null>(null)
-  const slidesRef = useRef<HTMLDivElement[]>([])
-  const currentImageIndex = useRef(0)
+// Desktop version: Swiper-based carousel, same as mobile but bigger
+function ParallaxSectionDesktop() {
+  const [activeSlide, setActiveSlide] = useState(0)
+  const swiperRef = useRef<SwiperType | null>(null)
 
-  useEffect(() => {
-    // Only run GSAP ScrollTrigger on desktop
-    if (window.innerWidth < 768) return
-
-    const section = sectionRef.current
-    const slides = slidesRef.current
-    if (!section || slides.length === 0) return
-
-    // Set initial positions - all images stacked, only first visible
-    gsap.set(slides, { 
-      yPercent: 0, 
-      opacity: 0,
-      zIndex: 1
-    })
-    gsap.set(slides[0], { 
-      opacity: 1,
-      zIndex: 2
-    })
-
-    // Remove all previous triggers
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-
-    // Create fixed section with image transitions - only when you reach this section
-    ScrollTrigger.create({
-      trigger: section,
-      start: "top top", // Only starts when section reaches top of viewport
-      end: `+=${parallaxImages.length * window.innerHeight}`, // Each image gets full viewport height
-      pin: true,
-      pinSpacing: false, // Remove spacing to truly lock the section
-      onUpdate: self => {
-        const progress = self.progress
-        const totalImages = parallaxImages.length
-        const imageIndex = Math.floor(progress * totalImages)
-        const clampedIndex = Math.min(imageIndex, totalImages - 1)
-        
-        // Always update the image based on scroll progress (no transition lock)
-        if (clampedIndex !== currentImageIndex.current) {
-          currentImageIndex.current = clampedIndex
-          
-          // Hide all images first
-          slides.forEach((slide, i) => {
-            if (i === clampedIndex) {
-              gsap.set(slide, { opacity: 1, zIndex: 2 })
-            } else {
-              gsap.set(slide, { opacity: 0, zIndex: 1 })
-            }
-          })
-        }
-      },
-    })
-  }, [])
+  const goToSlide = (index: number) => {
+    if (swiperRef.current) {
+      swiperRef.current.slideToLoop(index)
+    }
+  }
 
   return (
-    <>
-      {/* Desktop version: hidden on mobile */}
-      <section id="how-it-works" ref={sectionRef} className="relative z-[60] w-full h-screen overflow-hidden bg-white hidden md:block parallax-desktop-container">
-        {parallaxImages.map((src, index) => (
-          <div
-            key={src}
-            ref={el => { if (el) slidesRef.current[index] = el }}
-            className="parallax-slide"
-            style={{ zIndex: 1 }}
+    <section id="how-it-works" className="hidden md:block w-full bg-white py-20 lg:min-h-[800px]">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-black">HOW IT WORKS</h2>
+          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+            Experience our platform through these key features and see how we're transforming the way you handle payments.
+          </p>
+        </div>
+        <div className="relative">
+          <Swiper
+            modules={[Pagination, Autoplay, Navigation]}
+            grabCursor={true}
+            centeredSlides={true}
+            slidesPerView="auto"
+            spaceBetween={30}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            loop={true}
+            speed={500}
+            touchRatio={1}
+            touchAngle={45}
+            threshold={5}
+            longSwipesRatio={0.5}
+            longSwipesMs={300}
+            followFinger={true}
+            allowTouchMove={true}
+            resistance={true}
+            resistanceRatio={0.85}
+            navigation={{
+              nextEl: '.swiper-button-next-custom',
+              prevEl: '.swiper-button-prev-custom',
+            }}
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper
+            }}
+            onSlideChange={(swiper) => setActiveSlide(swiper.realIndex)}
+            className="parallax-swiper-desktop"
           >
-            <img
-              src={src}
-              alt="parallax slide"
-              className="absolute inset-0 w-full h-full object-cover bg-white transition-all duration-700"
-              draggable="false"
+            {parallaxImages.map((src, index) => (
+              <SwiperSlide key={index} className="!w-[500px]">
+                <div className="relative h-[600px] rounded-3xl overflow-hidden mx-2 shadow-2xl">
+                  <Image 
+                    src={src} 
+                    alt={`Slide ${index + 1}`} 
+                    fill 
+                    className="object-cover"
+                    priority={index < 2}
+                    loading={index < 2 ? "eager" : "lazy"}
+                    sizes="500px"
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          
+          {/* Custom Navigation Buttons */}
+          <button className="swiper-button-prev-custom absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
+            <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button className="swiper-button-next-custom absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
+            <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+        
+        {/* Custom Indicators */}
+        <div className="flex justify-center mt-8 space-x-4">
+          {parallaxImages.map((_, idx) => (
+            <button
+              key={idx}
+              className={`h-4 w-4 rounded-full transition-all duration-300 hover:scale-125 ${
+                idx === activeSlide ? "bg-gray-800 w-12 shadow-lg" : "bg-gray-300 opacity-40 hover:opacity-70"
+              }`}
+              onClick={() => goToSlide(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
             />
-          </div>
-        ))}
-      </section>
-      {/* Mobile version: only on mobile */}
+          ))}
+        </div>
+      </div>
+      <style jsx global>{`
+        .parallax-swiper-desktop {
+          padding: 20px 0 40px 0;
+          overflow: visible;
+        }
+        .parallax-swiper-desktop .swiper-slide {
+          transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+          will-change: transform, opacity;
+          transform: translateZ(0);
+        }
+        .parallax-swiper-desktop .swiper-slide:not(.swiper-slide-active) {
+          transform: scale(0.9) translateZ(0);
+          opacity: 0.7;
+        }
+        .parallax-swiper-desktop .swiper-slide-active {
+          transform: scale(1) translateZ(0);
+          opacity: 1;
+        }
+        .parallax-swiper-desktop .swiper-wrapper {
+          transform: translateZ(0);
+        }
+        .parallax-swiper-desktop .swiper-container {
+          overflow: visible;
+        }
+      `}</style>
+    </section>
+  )
+}
+
+export default function ParallaxSection() {
+  return (
+    <>
+      {/* Desktop version: Swiper carousel */}
+      <ParallaxSectionDesktop />
+      {/* Mobile version: Swiper carousel */}
       <ParallaxSectionMobile />
     </>
   )
