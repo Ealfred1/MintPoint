@@ -91,7 +91,18 @@ function MintpointForSectionMobile() {
             className="user-card relative rounded-3xl overflow-hidden bg-gray-900 w-full"
             style={{ height: "340px" }}
           >
-            <Image src={userType.image || "/placeholder.svg"} alt={userType.title} fill className="object-cover" />
+            <Image 
+              src={userType.image || "/placeholder.svg"} 
+              alt={userType.title} 
+              fill 
+              className="object-cover"
+              priority={index < 2}
+              loading={index < 2 ? "eager" : "lazy"}
+              sizes="(max-width: 768px) 100vw, 50vw"
+              quality={85}
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             <div className="absolute bottom-6 left-6 right-6">
               <p className="text-lg font-semibold leading-relaxed text-white">{userType.title}</p>
@@ -115,7 +126,11 @@ export default function MintpointForSection() {
 
     if (!section || !title || !content) return
 
+    let ticking = false
+
     const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
       const sectionRect = section.getBoundingClientRect()
       const sectionHeight = section.offsetHeight
       const windowHeight = window.innerHeight
@@ -136,18 +151,24 @@ export default function MintpointForSection() {
         title.style.zIndex = "auto"
       }
 
-      // Animate content cards based on scroll progress - removed opacity animation
+      // Optimized scroll animations with throttling
       const cards = content.querySelectorAll(".user-card")
       cards.forEach((card, index) => {
         const cardElement = card as HTMLElement
         const cardProgress = Math.max(0, Math.min(1, scrollProgress * userTypes.length - index))
 
-        cardElement.style.transform = `translateY(${(1 - cardProgress) * 100}px)`
-        // Removed opacity animation - cards will be visible normally
+        // Use transform3d for hardware acceleration
+        cardElement.style.transform = `translate3d(0, ${(1 - cardProgress) * 100}px, 0)`
+        cardElement.style.willChange = 'transform'
       })
+      
+      ticking = false
+        })
+        ticking = true
+      }
     }
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     handleScroll() // Initial call
 
     return () => window.removeEventListener("scroll", handleScroll)
@@ -173,7 +194,18 @@ export default function MintpointForSection() {
                 className="user-card relative rounded-3xl overflow-hidden bg-gray-900 transform translate-y-24 transition-all duration-700"
                 style={{ height: "400px" }}
               >
-                <Image src={userType.image || "/placeholder.svg"} alt={userType.title} fill className="object-cover" />
+                <Image 
+                  src={userType.image || "/placeholder.svg"} 
+                  alt={userType.title} 
+                  fill 
+                  className="object-cover"
+                  priority={index < 2}
+                  loading={index < 2 ? "eager" : "lazy"}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  quality={85}
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div className="absolute bottom-8 left-8 right-8">
                   <p className="text-xl md:text-2xl font-semibold leading-relaxed text-white">{userType.title}</p>
