@@ -67,7 +67,7 @@ function ParallaxSectionMobile() {
         >
           {parallaxImages.map((src, index) => (
             <SwiperSlide key={index} className="!w-[300px]">
-              <div className="relative h-[350px] rounded-2xl overflow-hidden mx-2 shadow-lg">
+              <div className="relative h-[350px] rounded-2xl overflow-hidden mx-2 shadow-lg bg-gray-100">
                 <Image 
                   src={src} 
                   alt={`Slide ${index + 1}`} 
@@ -76,6 +76,11 @@ function ParallaxSectionMobile() {
                   priority={index < 2}
                   loading={index < 2 ? "eager" : "lazy"}
                   sizes="300px"
+                  unoptimized={src.endsWith('.svg')}
+                  onError={(e) => {
+                    console.log('Image failed to load:', src)
+                    e.currentTarget.style.display = 'none'
+                  }}
                 />
               </div>
             </SwiperSlide>
@@ -178,7 +183,7 @@ function ParallaxSectionDesktop() {
           >
             {parallaxImages.map((src, index) => (
               <SwiperSlide key={index} className="!w-[500px]">
-                <div className="relative h-[600px] rounded-3xl overflow-hidden mx-2 shadow-2xl">
+                <div className="relative h-[600px] rounded-3xl overflow-hidden mx-2 shadow-2xl bg-gray-100">
                   <Image 
                     src={src} 
                     alt={`Slide ${index + 1}`} 
@@ -187,6 +192,11 @@ function ParallaxSectionDesktop() {
                     priority={index < 2}
                     loading={index < 2 ? "eager" : "lazy"}
                     sizes="500px"
+                    unoptimized={src.endsWith('.svg')}
+                    onError={(e) => {
+                      console.log('Image failed to load:', src)
+                      e.currentTarget.style.display = 'none'
+                    }}
                   />
                 </div>
               </SwiperSlide>
