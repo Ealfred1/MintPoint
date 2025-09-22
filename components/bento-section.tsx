@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import Image from "next/image"
 
 const bentoItems = [
   {
@@ -101,13 +102,17 @@ function BentoSectionMobile() {
                 <div className="absolute inset-0 z-0" style={{ background: "rgba(0,0,0,0.25)" }}></div>
                 {/* Card background image as an inset image */}
                 {item.backgroundImage && (
-                  <img
+                  <Image
                     src={item.backgroundImage}
                     alt=""
-                    aria-hidden="true"
+                    fill
                     className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none select-none"
                     style={{ opacity: 0.2 }}
-                    draggable="false"
+                    draggable={false}
+                    priority={idx < 2}
+                    loading={idx < 2 ? "eager" : "lazy"}
+                    quality={60}
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 )}
                 {/* Card content */}
@@ -120,12 +125,17 @@ function BentoSectionMobile() {
                   className={`z-20 absolute`}
                   style={customImageStyle}
                 >
-                  <img
+                  <Image
                     src={item.image}
                     alt={item.title + " icon"}
+                    width={customImgSize.width}
+                    height={customImgSize.height}
                     className="object-contain drop-shadow-lg"
-                    draggable="false"
-                    style={{ width: customImgSize.width, height: customImgSize.height, maxWidth: "100%", maxHeight: "100%" }}
+                    draggable={false}
+                    priority={idx < 2}
+                    loading={idx < 2 ? "eager" : "lazy"}
+                    quality={80}
+                    sizes="(max-width: 768px) 120px, 160px"
                   />
                 </div>
               </div>
@@ -142,8 +152,8 @@ export default function BentoSection() {
 
   useEffect(() => {
     const observerOptions = {
-      threshold: 0.2,
-      rootMargin: "0px 0px -100px 0px",
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
     }
 
     const observer = new IntersectionObserver((entries) => {
@@ -151,9 +161,12 @@ export default function BentoSection() {
         if (entry.isIntersecting) {
           const cards = entry.target.querySelectorAll(".bento-card")
           cards.forEach((card, index) => {
-            setTimeout(() => {
-              card.classList.add("animate-in")
-            }, index * 150)
+            // Use requestAnimationFrame for better performance
+            requestAnimationFrame(() => {
+              setTimeout(() => {
+                card.classList.add("animate-in")
+              }, index * 100) // Reduced delay from 150ms to 100ms
+            })
           })
         }
       })
@@ -174,9 +187,11 @@ export default function BentoSection() {
   ) => (
     <div
       key={item.title}
-      className={`bento-card relative overflow-hidden rounded-3xl p-8 text-white transform transition-all duration-700 opacity-0 translate-y-8 hover:scale-105 hover:shadow-2xl ${extraClasses}`}
+      className={`bento-card relative overflow-hidden rounded-3xl p-8 text-white transform transition-all duration-300 opacity-0 translate-y-8 ${extraClasses}`}
       style={{
         background: `linear-gradient(to bottom right, rgba(0,0,0,1), rgba(0,0,0,1))`,
+        willChange: 'transform, opacity',
+        backfaceVisibility: 'hidden',
         // Remove backgroundImage from here
       }}
     >
@@ -184,13 +199,17 @@ export default function BentoSection() {
       <div className="absolute inset-0 z-0" style={{ background: "rgba(0,0,0,0.25)" }}></div>
       {/* Card background image as an inset image */}
       {item.backgroundImage && (
-        <img
+        <Image
           src={item.backgroundImage}
           alt=""
-          aria-hidden="true"
+          fill
           className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none select-none"
           style={{ opacity: 0.2 }}
-          draggable="false"
+          draggable={false}
+          priority={idx < 3}
+          loading={idx < 3 ? "eager" : "lazy"}
+          quality={60}
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
       )}
       {/* Card content */}
@@ -207,11 +226,17 @@ export default function BentoSection() {
         className={`z-20 absolute ${item.imageClass || ""}`}
         style={item.imageStyle}
       >
-        <img
+        <Image
           src={item.image}
           alt={item.title + " icon"}
+          width={200}
+          height={200}
           className="object-contain drop-shadow-lg"
-          draggable="false"
+          draggable={false}
+          priority={idx < 3}
+          loading={idx < 3 ? "eager" : "lazy"}
+          quality={80}
+          sizes="(max-width: 768px) 120px, 200px"
         />
       </div>
     </div>
